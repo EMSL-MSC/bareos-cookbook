@@ -1,5 +1,5 @@
 django_install_cmd = if rhel? && node['platform_version'].to_i < 7
-                       "pip install 'django<2.0.0'"
+                       "pip install 'django==1.6.11'"
                      else
                        "pip install 'django' --upgrade"
                      end

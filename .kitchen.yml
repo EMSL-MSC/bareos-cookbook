@@ -39,7 +39,7 @@ verifier:
 suites:
   - name: server
     run_list:
-      - recipe[bareos-test::default]
-      - recipe[bareos::default]
+      - recipe[bareos-test]
+      - recipe[bareos]
       - recipe[bareos-test::python]
       - recipe[bareos-test::graphite_plugin_test]

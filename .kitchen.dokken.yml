@@ -1,12 +1,14 @@
 ---
 driver:
   name: dokken
+  chef_version: latest
 
 transport:
   name: dokken
 
 provisioner:
   name: dokken
+  always_update_cookbooks: true
 
 platforms:
   - name: ubuntu-16

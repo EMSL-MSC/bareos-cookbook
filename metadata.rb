@@ -11,7 +11,7 @@ version           '1.0.0'
 chef_version      '~> 14'
 
 supports          'debian', '>= 8'
-supports          'ubuntu', '>= 14' # No pre-built Bareos 15.x binaries for Ubuntu >= 16
+supports          'ubuntu', '>= 14' # No pre-built Bareos 15.x binaries for Ubuntu < 16
 supports          'centos', '>= 6'
 
 depends           'chef-sugar'

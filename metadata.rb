@@ -16,5 +16,3 @@ supports          'centos', '>= 6'
 
 depends           'chef-sugar'
 depends           'chef-vault'
-depends           'poise-git'
-depends           'poise-python'

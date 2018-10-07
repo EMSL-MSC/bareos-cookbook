@@ -4,8 +4,8 @@ describe package('python-bareos') do
 end
 
 %w(
-bareos_graphite_1a
-bareos_graphite_1b
+  bareos_graphite_1a
+  bareos_graphite_1b
 ).each do |plugin|
   describe directory("/opt/#{plugin}/source") do
     it { should exist }
@@ -28,12 +28,12 @@ bareos_graphite_1b
   end
 end
 
-describe directory("/opt/bareos_virtualenv") do
+describe directory('/opt/bareos_virtualenv') do
   it { should exist }
 end
 
 %w(python-bareos django requests).each do |pip_pkg|
-  describe pip(pip_pkg, "/opt/bareos_virtualenv/bin/pip") do
+  describe pip(pip_pkg, '/opt/bareos_virtualenv/bin/pip') do
     it { should be_installed }
   end
 end

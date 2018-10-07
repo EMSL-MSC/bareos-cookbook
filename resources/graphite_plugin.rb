@@ -1,0 +1,60 @@
+# Deploys and configures an instance of the Bareos graphite plugin
+
+property :src_dest_prefix, String, default: '/opt'
+property :src_uri, String, default: 'https://raw.githubusercontent.com/bareos/bareos-contrib/master/misc/performance/graphite/bareos-graphite-poller.py'
+property :src_checksum, String, default: '3c25e4b5bc6c76c8539ee105d53f9fb25fb2d7759645c4f5fa26e6ff7eb020b3'
+property :plugin_owner, String, default: 'bareos'
+property :plugin_group, String, default: 'bareos'
+property :plugin_virtualenv_path, String, default: '/opt/bareos_virtualenv'
+property :template_cookbook, String, default: 'bareos'
+property :sensitive, [true, false], default: true
+property :graphite, Hash, required: true
+property :manage_crontab, [true, false], default: true
+property :crontab_mail_to, String, default: ''
+
+action :create do
+  package 'python-bareos'
+
+  directory "#{new_resource.src_dest_prefix}/#{new_resource.name}" do
+    owner new_resource.plugin_owner
+    group new_resource.plugin_group
+  end
+
+  directory "#{new_resource.src_dest_prefix}/#{new_resource.name}/source" do
+    owner new_resource.plugin_owner
+    group new_resource.plugin_group
+  end
+
+  remote_file "#{new_resource.name}_py_script" do
+    source new_resource.src_uri
+    checksum new_resource.src_checksum
+    path "#{new_resource.src_dest_prefix}/#{new_resource.name}/source/bareos-graphite-poller.py"
+    owner new_resource.plugin_owner
+    group new_resource.plugin_group
+    mode 0750
+  end
+
+  template "#{new_resource.name}_conf" do
+    path "#{new_resource.src_dest_prefix}/#{new_resource.name}/source/graphite-poller.conf"
+    source 'graphite-poller.conf.erb'
+    cookbook new_resource.template_cookbook
+    owner new_resource.plugin_owner
+    group new_resource.plugin_group
+    mode '0600'
+    variables(
+      graphite: new_resource.graphite
+    )
+    sensitive new_resource.sensitive
+  end
+
+  cron "#{new_resource.name}_cron" do
+    mailto new_resource.crontab_mail_to
+    user new_resource.plugin_owner
+    command %W(
+      source #{new_resource.plugin_virtualenv_path}/bin/activate &&
+      python #{new_resource.src_dest_prefix}/#{new_resource.name}/source/bareos-graphite-poller.py
+      -c #{new_resource.src_dest_prefix}/#{new_resource.name}/source/graphite-poller.conf > /dev/null 2>&1
+    ).join(' ')
+    only_if { new_resource.manage_crontab }
+  end
+end

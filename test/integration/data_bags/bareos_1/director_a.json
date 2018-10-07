@@ -1,34 +1,6 @@
 {
   "id": "director1",
   "bareos": {
-    "services": {
-      "director": {
-        "director1a-dir": {
-          "dir_password": "SECRETDIR1PASS",
-          "mon_password": "SECRETDIR1MONPASS"
-        },
-        "director1b-dir": {
-          "dir_password": "SECRETDIR2PASS",
-          "mon_password": "SECRETDIR2MONPASS"
-        }
-      },
-      "storage_daemon": {
-        "storage1a-sd": {
-          "sd_password": "SECRETSDPASS",
-          "mon_password": "SECRETSDMONPASS"
-        }
-      },
-      "file_daemon": {
-        "client1a-fd": {
-          "fd_password": "SECRETFDPASS",
-          "mon_password": "SECRETFDMONPASS"
-        },
-        "client1b-fd": {
-          "fd_password": "SECRETFDPASS",
-          "mon_password": "SECRETFDMONPASS"
-        }
-      }
-    },
     "graphite": {
       "bareos_graphite_1a": {
         "director_fqdn": "localhost'",
@@ -45,6 +17,34 @@
         "graphite_endpoint": "graphite1b",
         "graphite_port": "2003",
         "graphite_prefix": "bareos1b."
+      }
+    },
+    "services": {
+      "director": {
+        "director1a-dir": {
+          "dir_password": "SECRETDIR1PASS",
+          "mon_password": "SECRETDIR1MONPASS"
+        },
+        "director1b-dir": {
+          "dir_password": "SECRETDIR2PASS",
+          "mon_password": "SECRETDIR2MONPASS"
+        }
+      },
+      "file_daemon": {
+        "client1a-fd": {
+          "fd_password": "SECRETFDPASS",
+          "mon_password": "SECRETFDMONPASS"
+        },
+        "client1b-fd": {
+          "fd_password": "SECRETFDPASS",
+          "mon_password": "SECRETFDMONPASS"
+        }
+      },
+      "storage_daemon": {
+        "storage1a-sd": {
+          "mon_password": "SECRETSDMONPASS",
+          "sd_password": "SECRETSDPASS"
+        }
       }
     }
   }

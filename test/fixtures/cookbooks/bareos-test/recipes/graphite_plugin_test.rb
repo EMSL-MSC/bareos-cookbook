@@ -1,8 +1,14 @@
+django_install_cmd = if rhel? && node['platform_version'].to_i < 7
+                       "pip install 'django<2.0.0'"
+                     else
+                       "pip install 'django' --upgrade"
+                     end
+
 bash 'install_bareos_graphite_requirements' do
   code <<-EOH
 source /opt/bareos_virtualenv/bin/activate
-pip install django --upgrade
-pip install requests --upgrade
+#{django_install_cmd}
+pip install 'requests' --upgrade
 deactivate
 EOH
 end

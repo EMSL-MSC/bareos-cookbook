@@ -5,7 +5,7 @@ if rhel?
     gpgkey node['bareos']['gpgkey']
     action :create
   end
-  yum_repository 'bareos-contrib' do
+  yum_repository 'bareos_contrib' do
     description node['bareos']['contrib_description']
     baseurl node['bareos']['contrib_baseurl']
     gpgkey node['bareos']['contrib_gpgkey']

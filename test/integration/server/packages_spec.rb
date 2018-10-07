@@ -58,7 +58,7 @@ elsif os.family == 'redhat'
       it { should exist }
       it { should be_enabled }
     end
-    describe yum.repo('bareos-contrib') do
+    describe yum.repo('bareos_contrib') do
       it { should exist }
       it { should be_enabled }
     end
@@ -67,7 +67,7 @@ elsif os.family == 'redhat'
       it { should exist }
       it { should be_enabled }
     end
-    describe yum.repo('bareos-contrib') do
+    describe yum.repo('bareos_contrib') do
       it { should exist }
       it { should be_enabled }
     end

@@ -1,0 +1,10 @@
+<%# BAREOS GRAPHITE PLUGIN CONFIGURATION TEMPLATE %>
+[director]
+server=<%= @graphite[:director_fqdn] %>
+name=<%= @graphite[:director_name] %>
+password=<%= @graphite[:director_password] %>
+
+[graphite]
+server=<%= @graphite[:graphite_endpoint] %>
+port=<%= @graphite[:graphite_port] %>
+prefix=<%= @graphite[:graphite_prefix] %>

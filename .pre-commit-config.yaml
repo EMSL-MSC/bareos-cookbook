@@ -1,0 +1,31 @@
+repos:
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v1.3.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: check-merge-conflict
+    -   id: end-of-file-fixer
+    -   id: check-added-large-files
+    -   id: check-json
+    -   id: check-vcs-permalinks
+    -   id: mixed-line-ending
+    -   id: pretty-format-json
+        args:
+        - --autofix
+        - --top-keys=id
+    -   id: sort-simple-yaml
+        files: '.yaml$'
+    -   id: check-symlinks
+    -   id: check-yaml
+    -   id: detect-private-key
+-   repo: git://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.1.5
+    hooks:
+    -   id: remove-crlf
+    -   id: remove-tabs
+-   repo: git://github.com/EMSL-MSC/pre-commit-hooks-chef
+    rev: 8e9ad15ee7430c7a52d5527d6b9cc5d0a158c974
+    hooks:
+    -   id: check-cookstyle
+    -   id: check-foodcritic
+    # -   id: check-rspec

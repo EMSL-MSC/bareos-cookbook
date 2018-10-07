@@ -1,0 +1,41 @@
+---
+driver:
+  name: dokken
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+
+platforms:
+  - name: ubuntu-16
+    driver:
+      image: dokken/ubuntu-16.04
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
+    run_list:
+      - recipe[apt]
+    attributes:
+      apt:
+        compile_time_update: true
+  - name: centos-7
+    driver:
+      image: dokken/centos-7
+      privileged: true
+      pid_one_command: /usr/lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
+
+verifier:
+  name: inspec
+
+suites:
+  - name: server
+    run_list:
+      - recipe[bareos-test]
+      - recipe[bareos]
+      - recipe[bareos-test::python]
+      - recipe[bareos-test::graphite_plugin_test]

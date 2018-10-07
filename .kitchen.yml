@@ -1,0 +1,45 @@
+---
+driver:
+  name: vagrant
+
+platforms:
+  - name: debian-8
+    driver:
+      box: bento/debian-8.11
+
+  - name: debian-9
+    driver:
+      box: bento/debian-9.5
+
+  - name: ubuntu-14
+    driver:
+      box: bento/ubuntu-14.04
+
+  - name: ubuntu-16
+    driver:
+      box: bento/ubuntu-16.04
+
+  - name: centos-6.9
+    driver:
+      box: bento/centos-6.9
+
+  - name: centos-7.5
+    driver:
+      box: bento/centos-7.5
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  install_strategy: always
+  product_version: latest
+
+verifier:
+  name: inspec
+
+suites:
+  - name: server
+    run_list:
+      - recipe[bareos-test]
+      - recipe[bareos]
+      - recipe[bareos-test::python]
+      - recipe[bareos-test::graphite_plugin_test]

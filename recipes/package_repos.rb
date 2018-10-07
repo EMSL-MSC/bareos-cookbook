@@ -27,5 +27,3 @@ elsif debian?
     action :add
   end
 end
-
-package node['bareos']['packages'] if node['bareos']['packages']

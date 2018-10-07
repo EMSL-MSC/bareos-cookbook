@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'bareos::packages' do
+describe 'bareos::package_repos' do
   before do
     allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
   end

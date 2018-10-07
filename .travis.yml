@@ -22,15 +22,15 @@ env:
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/cookstyle --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
-  - /opt/chefdk/embedded/bin/rspec --version
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
+  - chef --version
+  - cookstyle --version
+  - foodcritic --version
+  - rspec --version
+  - chef gem install kitchen-dokken
 
 script:
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
-  - /opt/chefdk/embedded/bin/kitchen test $T -d always
+  - chef gem install kitchen-dokken
+  - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen test $T -d always
 
 jobs:
   include:

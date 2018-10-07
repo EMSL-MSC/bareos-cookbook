@@ -1,6 +1,6 @@
 package %w(python python-virtualenv python-pip)
 
-execute '/bin/virtualenv /opt/bareos_virtualenv --system-site-packages' do
+execute 'virtualenv /opt/bareos_virtualenv --system-site-packages' do
   creates '/opt/bareos_virtualenv'
 end
 

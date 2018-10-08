@@ -1,5 +1,6 @@
 # Deploys and configures an instance of the Bareos graphite plugin
 
+property :graphite_config, Hash, required: true
 property :src_dest_prefix, String, default: '/opt'
 property :src_uri, String, default: 'https://raw.githubusercontent.com/bareos/bareos-contrib/master/misc/performance/graphite/bareos-graphite-poller.py'
 property :src_checksum, String, default: '3c25e4b5bc6c76c8539ee105d53f9fb25fb2d7759645c4f5fa26e6ff7eb020b3'
@@ -7,8 +8,6 @@ property :plugin_owner, String, default: 'bareos'
 property :plugin_group, String, default: 'bareos'
 property :plugin_virtualenv_path, String, default: '/opt/bareos_virtualenv'
 property :template_cookbook, String, default: 'bareos'
-property :sensitive, [true, false], default: true
-property :graphite, Hash, required: true
 property :manage_crontab, [true, false], default: true
 property :crontab_mail_to, String, default: ''
 
@@ -35,16 +34,15 @@ action :create do
   end
 
   template "#{new_resource.name}_conf" do
-    path "#{new_resource.src_dest_prefix}/#{new_resource.name}/source/graphite-poller.conf"
     source 'graphite-poller.conf.erb'
+    path "#{new_resource.src_dest_prefix}/#{new_resource.name}/source/graphite-poller.conf"
     cookbook new_resource.template_cookbook
     owner new_resource.plugin_owner
     group new_resource.plugin_group
     mode '0600'
     variables(
-      graphite: new_resource.graphite
+      graphite_config: new_resource.graphite_config
     )
-    sensitive new_resource.sensitive
   end
 
   cron "#{new_resource.name}_cron" do

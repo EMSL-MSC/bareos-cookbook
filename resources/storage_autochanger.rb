@@ -20,7 +20,13 @@ action :create do
       autochanger_config: new_resource.autochanger_config,
       autochanger_name: new_resource.name
     )
-    # notifies :restart, 'service[bareos-sd]', :delayed
+    notifies :restart, "service[#{new_resource.name}_storage_autochanger_daemon]", :delayed
     action :create
+  end
+
+  service "#{new_resource.name}_storage_autochanger_daemon" do
+    service_name 'bareos-sd'
+    supports [restart: true]
+    action :nothing
   end
 end

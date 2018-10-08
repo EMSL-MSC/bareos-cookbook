@@ -1,0 +1,182 @@
+{
+  "id": "config",
+  "bareos": {
+    "graphite": {
+      "bareos_graphite_1": {
+        "director_fqdn": "localhost'",
+        "director_name": "local-dir'",
+        "director_password": "testpassnotsecret'",
+        "graphite_endpoint": "graphite1",
+        "graphite_port": "2003",
+        "graphite_prefix": "bareos1."
+      },
+      "bareos_graphite_2": {
+        "director_fqdn": "localhost'",
+        "director_name": "local-dir'",
+        "director_password": "testpassnotsecret'",
+        "graphite_endpoint": "graphite2",
+        "graphite_port": "2003",
+        "graphite_prefix": "bareos2."
+      }
+    },
+    "services": {
+      "director": {
+        "local-dir": {
+          "dir_password": "SECRETDIR1PASS",
+          "mon_password": "SECRETDIR1MONPASS"
+        }
+      },
+      "file_daemon": {
+        "local-fd": {
+          "fd_password": "SECRETFDPASS",
+          "mon_password": "SECRETFDMONPASS"
+        }
+      },
+      "storage_daemon": {
+        "autochanger": {
+          "test-autochanger1": {
+            "Changer Command": [
+              "\"/usr/lib/bareos/scripts/mtx-changer %c %o %S %a %d\""
+            ],
+            "Changer Device": [
+              "/dev/tape/by-id/scsi-IBMLIBRARY1"
+            ],
+            "Device": [
+              "Example1",
+              "Example2"
+            ]
+          },
+          "test-autochanger2": {
+            "Changer Command": [
+              "\"/usr/lib/bareos/scripts/mtx-changer %c %o %S %a %d\""
+            ],
+            "Changer Device": [
+              "/dev/tape/by-id/scsi-IBMLIBRARY2"
+            ],
+            "Device": [
+              "Example3",
+              "Example4"
+            ]
+          }
+        },
+        "daemon": {
+          "bareos-sd": {
+            "Maximum Concurrent Jobs": [
+              "20"
+            ],
+            "SDPort": [
+              "9103"
+            ]
+          }
+        },
+        "device": {
+          "Example1": {
+            "AlwaysOpen": "yes;",
+            "ArchiveDevice": "/dev/tape/by-id/scsi-IBMTAPEDRIVE1-nst",
+            "Autochanger": "yes",
+            "AutomaticMount": "yes;",
+            "Autoselect": "no",
+            "Description": "\"Example1 Tape Drive.\"",
+            "DeviceType": "tape",
+            "DriveIndex": "0",
+            "Maximum Changer Wait": "30 minutes",
+            "Maximum Concurrent Jobs": "1",
+            "Maximum File Size": "20G",
+            "Maximum Job Spool Size": "50G",
+            "Maximum Rewind Wait": "30 minutes",
+            "Maximum Spool Size": "50G",
+            "MediaType": "LTO-4",
+            "Spool Directory": "/spool"
+          },
+          "Example2": {
+            "AlwaysOpen": "yes;",
+            "ArchiveDevice": "/dev/tape/by-id/scsi-IBMTAPEDRIVE2-nst",
+            "Autochanger": "yes",
+            "AutomaticMount": "yes;",
+            "Autoselect": "no",
+            "Description": "\"Example2 Tape Drive.\"",
+            "DeviceType": "tape",
+            "DriveIndex": "1",
+            "Maximum Changer Wait": "30 minutes",
+            "Maximum Concurrent Jobs": "1",
+            "Maximum File Size": "20G",
+            "Maximum Job Spool Size": "50G",
+            "Maximum Rewind Wait": "30 minutes",
+            "Maximum Spool Size": "50G",
+            "MediaType": "LTO-4",
+            "Spool Directory": "/spool"
+          },
+          "Example3": {
+            "AlwaysOpen": "yes;",
+            "ArchiveDevice": "/dev/tape/by-id/scsi-IBMTAPEDRIVE3-nst",
+            "Autochanger": "yes",
+            "AutomaticMount": "yes;",
+            "Autoselect": "no",
+            "Description": "\"Example3 Tape Drive.\"",
+            "DeviceType": "tape",
+            "DriveIndex": "2",
+            "Maximum Changer Wait": "30 minutes",
+            "Maximum Concurrent Jobs": "1",
+            "Maximum File Size": "20G",
+            "Maximum Job Spool Size": "50G",
+            "Maximum Rewind Wait": "30 minutes",
+            "Maximum Spool Size": "50G",
+            "MediaType": "LTO-4",
+            "Spool Directory": "/spool"
+          },
+          "Example4": {
+            "AlwaysOpen": "yes;",
+            "ArchiveDevice": "/dev/tape/by-id/scsi-IBMTAPEDRIVE4-nst",
+            "Autochanger": "yes",
+            "AutomaticMount": "yes;",
+            "Autoselect": "no",
+            "Description": "\"Example4 Tape Drive.\"",
+            "DeviceType": "tape",
+            "DriveIndex": "3",
+            "Maximum Changer Wait": "30 minutes",
+            "Maximum Concurrent Jobs": "1",
+            "Maximum File Size": "20G",
+            "Maximum Job Spool Size": "50G",
+            "Maximum Rewind Wait": "30 minutes",
+            "Maximum Spool Size": "50G",
+            "MediaType": "LTO-4",
+            "Spool Directory": "/spool"
+          }
+        },
+        "director": {
+          "bareos-dir": {
+            "Description": [
+              "\"Director, who is permitted to contact this storage daemon.\""
+            ],
+            "Password": [
+              "SUPERNOTSECRETPASS"
+            ]
+          }
+        },
+        "messages": {
+          "Standard": {
+            "Description": [
+              "\"Send all messages to the Director.\""
+            ],
+            "Director": [
+              "bareos-dir = all"
+            ]
+          }
+        },
+        "mon": {
+          "bareos-mon": {
+            "Description": [
+              "\"Restricted Director, used by tray-monitor to get the status of this storage daemon.\""
+            ],
+            "Monitor": [
+              "yes"
+            ],
+            "Password": [
+              "SUPERNOTSECRETPASS"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

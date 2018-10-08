@@ -28,4 +28,4 @@ repos:
     hooks:
     -   id: check-cookstyle
     -   id: check-foodcritic
-    -   id: check-rspec
+    #-   id: check-rspec

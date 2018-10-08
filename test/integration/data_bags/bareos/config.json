@@ -3,17 +3,17 @@
   "bareos": {
     "graphite": {
       "bareos_graphite_1": {
-        "director_fqdn": "localhost'",
-        "director_name": "local-dir'",
-        "director_password": "testpassnotsecret'",
+        "director_fqdn": "localhost",
+        "director_name": "bareos-dir",
+        "director_password": "testpassnotsecret",
         "graphite_endpoint": "graphite1",
         "graphite_port": "2003",
         "graphite_prefix": "bareos1."
       },
       "bareos_graphite_2": {
-        "director_fqdn": "localhost'",
-        "director_name": "local-dir'",
-        "director_password": "testpassnotsecret'",
+        "director_fqdn": "localhost",
+        "director_name": "bareos-dir",
+        "director_password": "testpassnotsecret",
         "graphite_endpoint": "graphite2",
         "graphite_port": "2003",
         "graphite_prefix": "bareos2."
@@ -21,13 +21,13 @@
     },
     "services": {
       "director": {
-        "local-dir": {
+        "bareos-dir": {
           "dir_password": "SECRETDIR1PASS",
           "mon_password": "SECRETDIR1MONPASS"
         }
       },
       "file_daemon": {
-        "local-fd": {
+        "bareos-fd": {
           "fd_password": "SECRETFDPASS",
           "mon_password": "SECRETFDMONPASS"
         }

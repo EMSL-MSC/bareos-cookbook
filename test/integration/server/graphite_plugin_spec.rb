@@ -4,8 +4,8 @@ describe package('python-bareos') do
 end
 
 %w(
-  bareos_graphite_1a
-  bareos_graphite_1b
+  bareos_graphite_1
+  bareos_graphite_2
 ).each do |plugin|
   describe directory("/opt/#{plugin}/source") do
     it { should exist }
@@ -18,8 +18,7 @@ end
 
   describe file("/opt/#{plugin}/source/graphite-poller.conf") do
     it { should exist }
-    its('content') { should match(/name=director/) }
-    its('content') { should match(/port=2003/) }
+    its('content') { should match(/password=testpassnotsecret/) }
   end
 
   describe crontab('bareos') do

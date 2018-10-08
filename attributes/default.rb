@@ -28,5 +28,9 @@ when 'centos'
   default['bareos']['contrib_gpgkey'] = "#{node['bareos']['contrib_url']}/CentOS_#{node['platform_version'].to_i}/repodata/repomd.xml.key"
 end
 
+default['bareos']['storage']['disable_default_filestorage'] = nil
 default['bareos']['packages'] = nil
-default['bareos']['secret_vault_item'] = 'secrets'
+default['bareos']['service_data_bag'] = 'bareos'
+default['bareos']['file_daemon']['data_bag_item'] = 'config'
+default['bareos']['director']['data_bag_item'] = 'config'
+default['bareos']['storage_daemon']['data_bag_item'] = 'config'

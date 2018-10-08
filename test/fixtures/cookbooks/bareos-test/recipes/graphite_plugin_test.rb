@@ -13,11 +13,10 @@ deactivate
 EOH
 end
 
-dir1_vault = chef_vault_item('bareos_1', 'director_a')
+plugin_config = chef_vault_item('bareos', 'config')
 
-dir1_vault['bareos']['graphite'].each do |k, v|
+plugin_config['bareos']['graphite'].each do |k, v|
   bareos_graphite_plugin k do
-    graphite v
-    sensitive false
+    graphite_config v
   end
 end

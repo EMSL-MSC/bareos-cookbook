@@ -19,3 +19,4 @@ bin/*
 .kitchen/
 .kitchen.local.yml
 spec/spec_state
+*WIP*

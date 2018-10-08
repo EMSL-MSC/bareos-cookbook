@@ -42,4 +42,8 @@ suites:
       - recipe[bareos-test]
       - recipe[bareos]
       - recipe[bareos-test::python]
+      - recipe[bareos-test::pgsql]
       - recipe[bareos-test::graphite_plugin_test]
+      - recipe[bareos::storage_daemon]
+      - recipe[bareos-test::storage_device_test]
+      - recipe[bareos-test::storage_autochanger_test]

@@ -8,6 +8,7 @@ property :plugin_owner, String, default: 'bareos'
 property :plugin_group, String, default: 'bareos'
 property :plugin_virtualenv_path, String, default: '/opt/bareos_virtualenv'
 property :template_cookbook, String, default: 'bareos'
+property :template_name, String, default: 'graphite-poller.conf.erb'
 property :manage_crontab, [true, false], default: true
 property :crontab_mail_to, String, default: ''
 
@@ -34,7 +35,7 @@ action :create do
   end
 
   template "#{new_resource.name}_conf" do
-    source 'graphite-poller.conf.erb'
+    source new_resource.template_name
     path "#{new_resource.src_dest_prefix}/#{new_resource.name}/source/graphite-poller.conf"
     cookbook new_resource.template_cookbook
     owner new_resource.plugin_owner

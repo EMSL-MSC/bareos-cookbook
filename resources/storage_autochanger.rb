@@ -2,6 +2,7 @@
 
 property :autochanger_config, Hash, required: true
 property :template_cookbook, String, default: 'bareos'
+property :template_name, String, default: 'storage_autochanger.erb'
 
 default_action :create
 
@@ -9,7 +10,7 @@ action :create do
   include_recipe 'bareos::autochanger_setup'
 
   template "#{new_resource.name}_storage_autochanger" do
-    source 'storage_autochanger.erb'
+    source new_resource.template_name
     path "/etc/bareos/bareos-sd.d/autochanger/#{new_resource.name}.conf"
     cookbook new_resource.template_cookbook
     owner 'bareos'

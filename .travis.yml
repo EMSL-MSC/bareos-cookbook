@@ -43,6 +43,7 @@ jobs:
       script:
         - pip install pre-commit
         - pre-commit run -a
+        - chef exec delivery local all
 
 notifications:
   email:

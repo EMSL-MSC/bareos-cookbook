@@ -41,6 +41,9 @@
             "Changer Device": [
               "/dev/tape/by-id/scsi-IBMLIBRARY1"
             ],
+            "Description": [
+              "\"test-autochanger1 config.\""
+            ],
             "Device": [
               "Example1",
               "Example2"
@@ -53,6 +56,9 @@
             "Changer Device": [
               "/dev/tape/by-id/scsi-IBMLIBRARY2"
             ],
+            "Description": [
+              "\"test-autochanger2 config.\""
+            ],
             "Device": [
               "Example3",
               "Example4"
@@ -61,6 +67,9 @@
         },
         "daemon": {
           "bareos-sd": {
+            "Description": [
+              "\"Default bareos-sd config.\""
+            ],
             "Maximum Concurrent Jobs": [
               "20"
             ],

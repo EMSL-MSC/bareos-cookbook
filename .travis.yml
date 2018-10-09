@@ -15,14 +15,18 @@ stages:
 
 install: echo "skip bundle install"
 
-env:
-  - T=server-ubuntu-16
-  - T=server-centos-7
-
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - chef --version
+
+env:
+  - T=server-ubuntu-16
+  - T=server-centos-7
+
+script:
+  - chef gem install kitchen-dokken
+  - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen test $T -d always
 
 jobs:
   include:
@@ -40,18 +44,6 @@ jobs:
         - pip install pre-commit
         - pre-commit run -a
         - chef exec delivery local all
-    - stage: test
-      env:
-        - T=server-ubuntu-16
-        - T=server-centos-7
-        - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
-      services:
-      sudo:
-      language: python
-      python: 3.6
-      script:
-        - chef gem install kitchen-dokken
-        - kitchen test $T -d always
 
 notifications:
   email:

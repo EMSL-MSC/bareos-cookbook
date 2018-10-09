@@ -18,13 +18,7 @@ action :create do
       device_config: new_resource.device_config,
       device_name: new_resource.name
     )
-    notifies :restart, "service[#{new_resource.name}_storage_device_daemon]", :delayed
+    notifies :restart, "service[bareos-sd]", :delayed
     action :create
-  end
-
-  service "#{new_resource.name}_storage_device_daemon" do
-    service_name 'bareos-sd'
-    supports [restart: true]
-    action :nothing
   end
 end

@@ -96,8 +96,7 @@ bareos_storage_device 'FileStorage' do
 end
 
 # Start and enable SD service
-service 'manage_global_storage_daemon' do
-  service_name 'bareos-sd'
+service 'bareos-sd' do
   supports [status: true, restart: true, reload: false]
   action [:enable, :start]
 end

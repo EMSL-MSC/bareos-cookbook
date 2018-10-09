@@ -23,3 +23,9 @@ repos:
     hooks:
     -   id: remove-crlf
     -   id: remove-tabs
+-   repo: git://github.com/EMSL-MSC/pre-commit-hooks-chef
+    rev: 8e9ad15ee7430c7a52d5527d6b9cc5d0a158c974
+    hooks:
+    -   id: check-cookstyle
+    -   id: check-foodcritic
+    #-   id: check-rspec

@@ -20,7 +20,7 @@ action :create do
       autochanger_config: new_resource.autochanger_config,
       autochanger_name: new_resource.name
     )
-    notifies :restart, "service[bareos-sd]", :delayed
+    notifies :restart, 'service[bareos-sd]', :delayed
     action :create
   end
 end

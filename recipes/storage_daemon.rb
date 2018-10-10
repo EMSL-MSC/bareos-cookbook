@@ -1,11 +1,6 @@
 include_recipe 'bareos::package_repos'
 package 'bareos-storage'
 
-service_config = chef_vault_item(
-  node['bareos']['service_data_bag'],
-  node['bareos']['storage_daemon']['data_bag_item']
-)
-
 directory '/etc/bareos/bareos-sd.d' do
   path '/etc/bareos/bareos-sd.d'
   owner 'bareos'
@@ -24,7 +19,13 @@ end
   end
 end
 
+service_config = chef_vault_item(
+  node['bareos']['service_data_bag'],
+  node['bareos']['storage_daemon']['data_bag_item']
+)
+
 service_config[:bareos][:services][:storage_daemon][:daemon].each do |daemon_name, daemon_config|
+  next if daemon_name.nil?
   template "#{daemon_name}_config" do
     source 'bareos-sd.erb'
     path "/etc/bareos/bareos-sd.d/storage/#{daemon_name}.conf"
@@ -39,6 +40,7 @@ service_config[:bareos][:services][:storage_daemon][:daemon].each do |daemon_nam
 end
 
 service_config[:bareos][:services][:storage_daemon][:director].each do |director_name, director_config|
+  next if director_name.nil?
   template "#{director_name}_config" do
     source 'storage_daemon_director.erb'
     path "/etc/bareos/bareos-sd.d/director/#{director_name}.conf"
@@ -53,6 +55,7 @@ service_config[:bareos][:services][:storage_daemon][:director].each do |director
 end
 
 service_config[:bareos][:services][:storage_daemon][:mon].each do |mon_name, mon_config|
+  next if mon_name.nil?
   template "#{mon_name}_config" do
     source 'storage_daemon_mon.erb'
     path "/etc/bareos/bareos-sd.d/director/#{mon_name}.conf"
@@ -67,6 +70,7 @@ service_config[:bareos][:services][:storage_daemon][:mon].each do |mon_name, mon
 end
 
 service_config[:bareos][:services][:storage_daemon][:messages].each do |messages_name, messages_config|
+  next if messages_name.nil?
   template "#{messages_name}_config" do
     source 'storage_daemon_messages.erb'
     path "/etc/bareos/bareos-sd.d/messages/#{messages_name}.conf"

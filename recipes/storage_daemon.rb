@@ -19,68 +19,87 @@ end
   end
 end
 
-service_config = chef_vault_item(
-  node['bareos']['service_data_bag'],
-  node['bareos']['storage_daemon']['data_bag_item']
-)
+sd_config = if node['bareos']['use_attribute_configs'] == false
+              data_bag_content = chef_vault_item(
+                node['bareos']['service_data_bag'],
+                node['bareos']['storage_daemon']['data_bag_item']
+              )
+              data_bag_content[:bareos][:services][:storage_daemon]
+            elsif node['bareos']['services']['storage_daemon'].nil?
+              Chef::Log.fatal('Declare "storage_daemon" attribute configs')
+              raise
+            else
+              node['bareos']['services']['storage_daemon']
+            end
 
-service_config[:bareos][:services][:storage_daemon][:daemon].each do |daemon_name, daemon_config|
-  next if daemon_name.nil?
-  template "#{daemon_name}_config" do
-    source 'bareos-sd.erb'
-    path "/etc/bareos/bareos-sd.d/storage/#{daemon_name}.conf"
-    owner 'bareos'
-    group 'bareos'
-    mode '0640'
-    variables(
-      daemon_config: daemon_config,
-      daemon_name: daemon_name
-    )
+unless sd_config[:daemon].nil?
+  sd_config[:daemon].each do |daemon_name, daemon_config|
+    template "#{daemon_name}_config" do
+      source 'bareos-sd.erb'
+      path "/etc/bareos/bareos-sd.d/storage/#{daemon_name}.conf"
+      owner 'bareos'
+      group 'bareos'
+      mode '0640'
+      variables(
+        daemon_config: daemon_config,
+        daemon_name: daemon_name
+      )
+      notifies :restart, 'service[bareos-sd]', :delayed
+    end
   end
 end
 
-service_config[:bareos][:services][:storage_daemon][:director].each do |director_name, director_config|
-  next if director_name.nil?
-  template "#{director_name}_config" do
-    source 'storage_daemon_director.erb'
-    path "/etc/bareos/bareos-sd.d/director/#{director_name}.conf"
-    owner 'bareos'
-    group 'bareos'
-    mode '0640'
-    variables(
-      director_config: director_config,
-      director_name: director_name
-    )
+unless sd_config[:director].nil?
+  sd_config[:director].each do |director_name, director_config|
+    next if director_name.nil?
+    template "#{director_name}_config" do
+      source 'storage_daemon_director.erb'
+      path "/etc/bareos/bareos-sd.d/director/#{director_name}.conf"
+      owner 'bareos'
+      group 'bareos'
+      mode '0640'
+      variables(
+        director_config: director_config,
+        director_name: director_name
+      )
+      notifies :restart, 'service[bareos-sd]', :delayed
+    end
   end
 end
 
-service_config[:bareos][:services][:storage_daemon][:mon].each do |mon_name, mon_config|
-  next if mon_name.nil?
-  template "#{mon_name}_config" do
-    source 'storage_daemon_mon.erb'
-    path "/etc/bareos/bareos-sd.d/director/#{mon_name}.conf"
-    owner 'bareos'
-    group 'bareos'
-    mode '0640'
-    variables(
-      mon_config: mon_config,
-      mon_name: mon_name
-    )
+unless sd_config[:mon].nil?
+  sd_config[:mon].each do |mon_name, mon_config|
+    next if mon_name.nil?
+    template "#{mon_name}_config" do
+      source 'storage_daemon_mon.erb'
+      path "/etc/bareos/bareos-sd.d/director/#{mon_name}.conf"
+      owner 'bareos'
+      group 'bareos'
+      mode '0640'
+      variables(
+        mon_config: mon_config,
+        mon_name: mon_name
+      )
+      notifies :restart, 'service[bareos-sd]', :delayed
+    end
   end
 end
 
-service_config[:bareos][:services][:storage_daemon][:messages].each do |messages_name, messages_config|
-  next if messages_name.nil?
-  template "#{messages_name}_config" do
-    source 'storage_daemon_messages.erb'
-    path "/etc/bareos/bareos-sd.d/messages/#{messages_name}.conf"
-    owner 'bareos'
-    group 'bareos'
-    mode '0640'
-    variables(
-      messages_config: messages_config,
-      messages_name: messages_name
-    )
+unless sd_config[:messages].nil?
+  sd_config[:messages].each do |messages_name, messages_config|
+    next if messages_name.nil?
+    template "#{messages_name}_config" do
+      source 'storage_daemon_messages.erb'
+      path "/etc/bareos/bareos-sd.d/messages/#{messages_name}.conf"
+      owner 'bareos'
+      group 'bareos'
+      mode '0640'
+      variables(
+        messages_config: messages_config,
+        messages_name: messages_name
+      )
+      notifies :restart, 'service[bareos-sd]', :delayed
+    end
   end
 end
 
@@ -89,7 +108,7 @@ default_filestorage = {
   'Archive Device' => '/var/lib/bareos/storage',
   'LabelMedia' => 'yes;',
   'Random Access' => 'yes;',
-  'AutomaticMount' => 'no;',
+  'AutomaticMount' => 'yes;',
   'RemovableMedia' => 'no;',
   'AlwaysOpen' => 'no;',
   'Description' => '"File device. A connecting Director must have the same Name and MediaType."',
@@ -97,6 +116,7 @@ default_filestorage = {
 bareos_storage_device 'FileStorage' do
   device_config default_filestorage
   not_if { node['bareos']['storage']['disable_default_filestorage'] }
+  notifies :restart, 'service[bareos-sd]', :delayed
 end
 
 # Start and enable SD service

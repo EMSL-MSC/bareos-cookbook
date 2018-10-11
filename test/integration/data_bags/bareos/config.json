@@ -158,7 +158,7 @@
               "\"Director, who is permitted to contact this storage daemon.\""
             ],
             "Password": [
-              "SUPERNOTSECRETPASS"
+              "\"SUPERNOTSECRETPASS\""
             ]
           }
         },
@@ -181,7 +181,7 @@
               "yes"
             ],
             "Password": [
-              "SUPERNOTSECRETPASS"
+              "\"SUPERNOTSECRETPASS\""
             ]
           }
         }

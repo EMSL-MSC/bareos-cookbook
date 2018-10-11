@@ -18,6 +18,8 @@ bash 'upgrade_pip' do
 source /opt/bareos_virtualenv/bin/activate
 #{pip_install_cmd}
 pip -V
+touch /opt/bareos_virtualenv/.pip_upgraded
 deactivate
 EOH
+  creates '/opt/bareos_virtualenv/.pip_upgraded'
 end

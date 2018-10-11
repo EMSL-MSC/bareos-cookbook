@@ -11,6 +11,8 @@ source /opt/bareos_virtualenv/bin/activate
 pip install 'requests' --upgrade
 deactivate
 EOH
+  not_if { ::Dir.exist?('/opt/bareos_virtualenv/lib/python2.7/site-packages/django') }
+  not_if { ::Dir.exist?('/opt/bareos_virtualenv/lib/python2.7/site-packages/requests') }
 end
 
 plugin_config = chef_vault_item('bareos', 'config')

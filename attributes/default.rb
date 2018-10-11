@@ -35,3 +35,4 @@ default['bareos']['file_daemon']['data_bag_item'] = 'config'
 default['bareos']['director']['data_bag_item'] = 'config'
 default['bareos']['storage_daemon']['data_bag_item'] = 'config'
 default['bareos']['services']['storage_daemon'] = nil
+default['bareos']['use_attribute_configs'] == false

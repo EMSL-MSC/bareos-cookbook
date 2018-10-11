@@ -25,15 +25,13 @@ sd_config = if node['bareos']['use_attribute_configs'] == false
                 node['bareos']['storage_daemon']['data_bag_item']
               )
               data_bag_content[:bareos][:services][:storage_daemon]
-            elsif node['bareos']['services']['storage_daemon'].nil?
-              Chef::Log.fatal('Declare "storage_daemon" attribute configs')
-              raise
             else
               node['bareos']['services']['storage_daemon']
             end
 
 unless sd_config[:daemon].nil?
   sd_config[:daemon].each do |daemon_name, daemon_config|
+    next if daemon_config.nil?
     template "#{daemon_name}_config" do
       source 'bareos-sd.erb'
       path "/etc/bareos/bareos-sd.d/storage/#{daemon_name}.conf"
@@ -51,7 +49,7 @@ end
 
 unless sd_config[:director].nil?
   sd_config[:director].each do |director_name, director_config|
-    next if director_name.nil?
+    next if director_config.nil?
     template "#{director_name}_config" do
       source 'storage_daemon_director.erb'
       path "/etc/bareos/bareos-sd.d/director/#{director_name}.conf"
@@ -69,7 +67,7 @@ end
 
 unless sd_config[:mon].nil?
   sd_config[:mon].each do |mon_name, mon_config|
-    next if mon_name.nil?
+    next if mon_config.nil?
     template "#{mon_name}_config" do
       source 'storage_daemon_mon.erb'
       path "/etc/bareos/bareos-sd.d/director/#{mon_name}.conf"
@@ -87,7 +85,7 @@ end
 
 unless sd_config[:messages].nil?
   sd_config[:messages].each do |messages_name, messages_config|
-    next if messages_name.nil?
+    next if messages_config.nil?
     template "#{messages_name}_config" do
       source 'storage_daemon_messages.erb'
       path "/etc/bareos/bareos-sd.d/messages/#{messages_name}.conf"

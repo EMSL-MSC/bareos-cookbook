@@ -17,7 +17,7 @@ end
 
 plugin_config = chef_vault_item('bareos', 'config')
 
-plugin_config['bareos']['graphite'].each do |k, v|
+plugin_config[:bareos][:graphite].each do |k, v|
   bareos_graphite_plugin k do
     graphite_config v
   end

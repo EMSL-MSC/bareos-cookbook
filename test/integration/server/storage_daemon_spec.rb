@@ -21,7 +21,7 @@ end
 ).each do |sd_config|
   describe file("#{conf_path}/bareos-sd.d/#{sd_config}") do
     it { should exist }
-    its('content') { should match(/Default bareos-sd config/) } if sd_config == 'storage/bareos-sd.conf'
+    its('content') { should match(/Name = bareos-sd/) } if sd_config == 'storage/bareos-sd.conf'
     its('content') { should match(/Director, who is permitted to contact this storage daemon/) } if sd_config == 'director/bareos-dir.conf'
     its('content') { should match(/Restricted Director, used by tray-monitor to get the status of this storage daemon/) } if sd_config == 'director/bareos-mon.conf'
     its('content') { should match(/Send all messages to the Director/) } if sd_config == 'messages/Standard.conf'

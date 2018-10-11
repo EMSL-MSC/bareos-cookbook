@@ -34,5 +34,8 @@ default['bareos']['service_data_bag'] = 'bareos'
 default['bareos']['file_daemon']['data_bag_item'] = 'config'
 default['bareos']['director']['data_bag_item'] = 'config'
 default['bareos']['storage_daemon']['data_bag_item'] = 'config'
-default['bareos']['services']['storage_daemon'] = nil
-default['bareos']['use_attribute_configs'] == false
+default['bareos']['use_attribute_configs'] = false
+default['bareos']['services']['storage_daemon']['daemon'] = nil
+default['bareos']['services']['storage_daemon']['director'] = nil
+default['bareos']['services']['storage_daemon']['mon'] = nil
+default['bareos']['services']['storage_daemon']['messages'] = nil

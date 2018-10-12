@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'bareos::package_install' do
+describe 'bareos::autochanger_common' do
   before do
     allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
   end
@@ -8,17 +8,11 @@ describe 'bareos::package_install' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          ChefSpec::ServerRunner.new(
-            platform: platform, version: version
-          ) do |node, _server|
-            node.normal['bareos']['packages'] = %w(bareos)
-          end.converge(described_recipe)
+          runner = ChefSpec::ServerRunner.new(platform: platform, version: version)
+          runner.converge(described_recipe)
         end
         it 'converges successfully' do
           expect { chef_run }.to_not raise_error
-        end
-        it 'installs bareos with the default action if attribute is not nil' do
-          expect(chef_run).to install_package(%w(bareos))
         end
       end
     end

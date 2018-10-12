@@ -4,12 +4,18 @@ property :autochanger_config, Hash, required: true
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'storage_autochanger.erb'
 
-default_action :create
-
 action :create do
-  include_recipe 'bareos::autochanger_setup'
+  include_recipe 'bareos::autochanger_common'
 
-  template "#{new_resource.name}_storage_autochanger" do
+  directory "autochanger_#{new_resource.name}_path" do
+    path '/etc/bareos/bareos-sd.d/autochanger'
+    owner 'bareos'
+    group 'bareos'
+    mode '0750'
+    action :create
+  end
+
+  template "autochanger_#{new_resource.name}_config" do
     source new_resource.template_name
     path "/etc/bareos/bareos-sd.d/autochanger/#{new_resource.name}.conf"
     cookbook new_resource.template_cookbook

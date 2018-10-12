@@ -8,7 +8,7 @@ property :plugin_owner, String, default: 'bareos'
 property :plugin_group, String, default: 'bareos'
 property :plugin_virtualenv_path, String, default: '/opt/bareos_virtualenv'
 property :template_cookbook, String, default: 'bareos'
-property :template_name, String, default: 'graphite-poller.conf.erb'
+property :template_name, String, default: 'graphite_poller.erb'
 property :manage_crontab, [true, false], default: true
 property :crontab_mail_to, String, default: ''
 

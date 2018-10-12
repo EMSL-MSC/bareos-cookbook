@@ -1,2 +1,2 @@
-include_recipe 'bareos::package_repos'
-include_recipe 'bareos::package_install'
+include_recipe 'bareos::package_repos_common'
+include_recipe 'bareos::package_install_common'

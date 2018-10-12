@@ -8,7 +8,7 @@ execute 'mtx-changer script' do
 end
 
 template 'mtx-changer config' do
-  source 'mtx-changer.erb'
+  source 'mtx_changer.erb'
   path '/etc/bareos/mtx-changer.conf'
   owner 'root'
   group 'root'

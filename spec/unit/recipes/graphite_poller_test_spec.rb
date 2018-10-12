@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'bareos-test::graphite_plugin_test' do
+describe 'bareos-test::graphite_poller_test' do
   before do
     allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
   end

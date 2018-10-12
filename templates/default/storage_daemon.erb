@@ -4,8 +4,8 @@
 # Bareos Storage Daemon Configuration File
 
 Storage {
-  Name = <%= @daemon_name %>
-<% @daemon_config.each do |component_type, component_values| %>
+  Name = <%= @storage_name %>
+<% @storage_config.each do |component_type, component_values| %>
 <%   component_values.each do |value| %>
   <%= component_type %> = <%= value %>
 <%   end %>

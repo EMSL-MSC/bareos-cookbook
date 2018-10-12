@@ -4,9 +4,9 @@ property :device_config, Hash, required: true
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'storage_device.erb'
 
-default_action :create
-
 action :create do
+  include_recipe 'bareos::storage_daemon_common'
+
   template "#{new_resource.name}_storage_device" do
     source new_resource.template_name
     path "/etc/bareos/bareos-sd.d/device/#{new_resource.name}.conf"

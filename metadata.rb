@@ -15,4 +15,3 @@ supports          'ubuntu', '>= 14'
 supports          'centos', '>= 6'
 
 depends           'chef-sugar'
-depends           'chef-vault'

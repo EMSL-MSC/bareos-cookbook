@@ -21,9 +21,18 @@
     },
     "services": {
       "director": {
-        "bareos-dir": {
-          "dir_password": "SECRETDIR1PASS",
-          "mon_password": "SECRETDIR1MONPASS"
+        "catalog": {
+          "MyCatalog": {
+            "dbname": "bareos",
+            "dbpassword": "",
+            "dbuser": "bareos"
+          }
+        },
+        "daemon": {
+          "bareos-dir": {
+            "dir_password": "SECRETDIR1PASS",
+            "mon_password": "SECRETDIR1MONPASS"
+          }
         }
       },
       "file_daemon": {
@@ -62,19 +71,6 @@
             "Device": [
               "Example3",
               "Example4"
-            ]
-          }
-        },
-        "daemon": {
-          "bareos-sd": {
-            "Description": [
-              "\"Default bareos-sd config.\""
-            ],
-            "Maximum Concurrent Jobs": [
-              "20"
-            ],
-            "SDPort": [
-              "9103"
             ]
           }
         },
@@ -182,6 +178,19 @@
             ],
             "Password": [
               "\"SUPERNOTSECRETPASS\""
+            ]
+          }
+        },
+        "storage": {
+          "bareos-sd": {
+            "Description": [
+              "\"Default bareos-sd config.\""
+            ],
+            "Maximum Concurrent Jobs": [
+              "20"
+            ],
+            "SDPort": [
+              "9103"
             ]
           }
         }

@@ -1,4 +1,5 @@
 # Repository
+default['bareos']['packages'] = %w(bareos)
 default['bareos']['version'] = '18.2'
 default['bareos']['url'] = 'http://download.bareos.org/bareos/release'
 default['bareos']['contrib_url'] = 'http://download.bareos.org/bareos/contrib'
@@ -27,6 +28,3 @@ when 'centos'
   default['bareos']['contrib_baseurl'] = "#{node['bareos']['contrib_url']}/CentOS_#{node['platform_version'].to_i}/"
   default['bareos']['contrib_gpgkey'] = "#{node['bareos']['contrib_url']}/CentOS_#{node['platform_version'].to_i}/repodata/repomd.xml.key"
 end
-
-default['bareos']['unmanage_default_catalog'] = false
-default['bareos']['packages'] = %w(bareos)

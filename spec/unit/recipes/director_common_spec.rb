@@ -49,9 +49,7 @@ describe 'bareos::director_common' do
           end
           expect(chef_run).to create_directory('/etc/bareos/bareos-dir.d')
         end
-        it 'creates and bootstraps the defined Bareos Catalog' do
-          expect(chef_run).to create_bareos_catalog('MyCatalog')
-        end
+
         it 'enables and starts the bareos-dir service' do
           expect(chef_run).to enable_service('bareos-dir')
           expect(chef_run).to start_service('bareos-dir')

@@ -1,4 +1,5 @@
 include_recipe 'bareos::package_repos_common'
+
 package 'bareos-storage'
 
 directory '/etc/bareos/bareos-sd.d' do

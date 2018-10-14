@@ -1,4 +1,5 @@
 include_recipe 'bareos::package_repos_common'
+
 package 'bareos-director'
 
 directory '/etc/bareos/bareos-dir.d' do
@@ -31,16 +32,6 @@ end
     mode '0750'
     action :create
   end
-end
-
-default_catalog_config = {
-  'dbname' => 'bareos',
-  'dbuser' => 'bareos',
-  'dbpassword' => '',
-}
-bareos_catalog 'MyCatalog' do
-  catalog_config default_catalog_config
-  not_if { node['bareos']['unmanage_default_catalog'] }
 end
 
 # Start and enable SD service

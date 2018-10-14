@@ -1,7 +1,4 @@
-data_bag_content = chef_vault_item(
-  node['bareos']['service_data_bag'],
-  node['bareos']['storage_daemon']['data_bag_item']
-)
+data_bag_content = chef_vault_item('bareos', 'config')
 sd_config = data_bag_content[:bareos][:services][:storage_daemon]
 
 sd_config[:storage].each do |storage_name, storage_config|

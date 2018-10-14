@@ -13,5 +13,3 @@ chef_version      '~> 14'
 supports          'debian', '>= 8'
 supports          'ubuntu', '>= 14'
 supports          'centos', '>= 6'
-
-depends           'chef-sugar'

@@ -11,11 +11,39 @@ provisioner:
   always_update_cookbooks: true
 
 platforms:
+  - name: debian-8
+    driver:
+      image: dokken/debian-8
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
+  - name: debian-9
+    driver:
+      image: dokken/debian-9
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
+  - name: ubuntu-14
+    driver:
+      image: dokken/ubuntu-14.04
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
   - name: ubuntu-16
     driver:
       image: dokken/ubuntu-16.04
       privileged: true
       pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
+  - name: centos-6
+    driver:
+      image: dokken/centos-6
+      privileged: true
+      pid_one_command: /usr/lib/systemd/systemd
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
   - name: centos-7

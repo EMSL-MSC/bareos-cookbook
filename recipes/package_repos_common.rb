@@ -1,4 +1,4 @@
-if rhel?
+if platform_family?('rhel')
   yum_repository 'bareos' do
     description node['bareos']['description']
     baseurl node['bareos']['baseurl']
@@ -11,7 +11,7 @@ if rhel?
     gpgkey node['bareos']['contrib_gpgkey']
     action :create
   end
-elsif debian?
+elsif platform_family?('debian')
   apt_repository 'bareos' do
     uri node['bareos']['baseurl']
     components ['/']

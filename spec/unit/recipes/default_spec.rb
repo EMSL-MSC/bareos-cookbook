@@ -18,6 +18,18 @@ describe 'bareos::default' do
           expect(chef_run).to include_recipe('bareos::package_repos_common')
           expect(chef_run).to include_recipe('bareos::package_install_common')
         end
+        %w(bareos bareos_contrib).each do |repo|
+          it "adds #{repo} repository" do
+            if platform =~ /^(ubuntu|debian)$/
+              expect(chef_run).to add_apt_repository(repo)
+            else
+              expect(chef_run).to create_yum_repository(repo)
+            end
+          end
+        end
+        it 'installs bareos with the default action' do
+          expect(chef_run).to install_package('bareos')
+        end
       end
     end
   end

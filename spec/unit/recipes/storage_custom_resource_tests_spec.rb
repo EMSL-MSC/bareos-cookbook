@@ -122,6 +122,27 @@ describe 'bareos-test::storage_custom_resource_tests' do
         it 'converges successfully' do
           expect { chef_run }.to_not raise_error
         end
+        it 'creates storage storage configs' do
+          expect(chef_run).to create_bareos_storage_storage('bareos-sd')
+        end
+        it 'creates storage director config' do
+          expect(chef_run).to create_bareos_storage_director('bareos-dir')
+        end
+        it 'creates storage mon configs' do
+          expect(chef_run).to create_bareos_storage_mon('bareos-mon')
+        end
+        it 'creates storage messages configs' do
+          expect(chef_run).to create_bareos_storage_messages('Standard')
+        end
+        it 'creates storage device configs' do
+          expect(chef_run).to create_bareos_storage_device('FileStorage')
+          expect(chef_run).to create_bareos_storage_device('Example1')
+          expect(chef_run).to create_bareos_storage_device('Example2')
+        end
+        it 'creates storage autochanger configs' do
+          expect(chef_run).to create_bareos_storage_autochanger('test-autochanger1')
+          expect(chef_run).to create_bareos_storage_autochanger('test-autochanger2')
+        end
       end
     end
   end

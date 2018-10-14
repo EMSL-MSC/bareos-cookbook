@@ -7,7 +7,7 @@ EOH
   creates '/opt/bareos_virtualenv'
 end
 
-pip_install_cmd = if rhel? && node['platform_version'].to_i < 7
+pip_install_cmd = if platform_family?('rhel') && node['platform_version'].to_i < 7
                     'pip install pip==7.0.1'
                   else
                     'pip install pip --upgrade'

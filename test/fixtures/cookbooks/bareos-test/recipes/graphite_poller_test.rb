@@ -1,5 +1,5 @@
 # Install known python dependencies so the bareos-graphite-poller functions
-django_install_cmd = if rhel? && node['platform_version'].to_i < 7
+django_install_cmd = if platform_family?('rhel') && node['platform_version'].to_i < 7
                        "pip install 'django==1.6.11'"
                      else
                        "pip install 'django' --upgrade"

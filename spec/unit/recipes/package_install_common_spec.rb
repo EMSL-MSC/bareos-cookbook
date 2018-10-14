@@ -10,14 +10,13 @@ describe 'bareos::package_install_common' do
         cached(:chef_run) do
           ChefSpec::ServerRunner.new(
             platform: platform, version: version
-          ) do |node, _server|
-            node.normal['bareos']['packages'] = 'bareos'
+          ) do |_node, _server|
           end.converge(described_recipe)
         end
         it 'converges successfully' do
           expect { chef_run }.to_not raise_error
         end
-        it 'installs bareos with the default action if attribute is not nil' do
+        it 'installs bareos package' do
           expect(chef_run).to install_package('bareos')
         end
       end

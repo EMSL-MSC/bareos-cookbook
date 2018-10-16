@@ -40,12 +40,9 @@ suites:
   - name: server
     run_list:
       - recipe[bareos-test]
-      - recipe[bareos]
-      - recipe[bareos-test::python]
       - recipe[bareos-test::pgsql]
-      - recipe[bareos-test::graphite_poller_test]
-      - recipe[bareos::storage_daemon_common]
-      - recipe[bareos-test::storage_custom_resource_tests]
+      - recipe[bareos-test::python]
       - recipe[bareos-test::catalog_test]
-      - recipe[bareos::director_common]
       - recipe[bareos-test::director_custom_resource_tests]
+      - recipe[bareos-test::storage_custom_resource_tests]
+      - recipe[bareos-test::graphite_poller_test]

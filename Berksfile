@@ -5,5 +5,7 @@ metadata
 solver :ruby, :required
 
 group :integration do
-  cookbook 'bareos-test', path: './test/fixtures/cookbooks/bareos-test'
+  Dir['test/fixtures/cookbooks/**/metadata.rb'].each do |metadata|
+    cookbook File.basename(File.dirname(metadata)), path: File.dirname(metadata)
+  end
 end

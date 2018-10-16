@@ -8,7 +8,7 @@ describe 'bareos::autochanger_common' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          runner = ChefSpec::ServerRunner.new(platform: platform, version: version)
+          runner = ChefSpec::SoloRunner.new(platform: platform, version: version)
           runner.converge(described_recipe)
         end
         it 'converges successfully' do

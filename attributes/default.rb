@@ -1,5 +1,8 @@
+# Bareos Packages Default
+default['bareos']['packages'] = %w(bareos-common)
+default['bareos']['use_custom_catalog'] = nil
+
 # Repository
-default['bareos']['packages'] = %w(bareos)
 default['bareos']['version'] = '18.2'
 default['bareos']['url'] = 'http://download.bareos.org/bareos/release'
 default['bareos']['contrib_url'] = 'http://download.bareos.org/bareos/contrib'

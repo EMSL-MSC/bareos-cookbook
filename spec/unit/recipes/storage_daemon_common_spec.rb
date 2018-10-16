@@ -8,7 +8,7 @@ describe 'bareos::storage_daemon_common' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          ChefSpec::ServerRunner.new(
+          ChefSpec::SoloRunner.new(
             platform: platform, version: version
           ) do |_node, _server|
           end.converge(described_recipe)

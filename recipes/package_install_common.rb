@@ -1,1 +1,1 @@
-package node['bareos']['packages'] if node['bareos']['packages']
+package node['bareos']['packages']

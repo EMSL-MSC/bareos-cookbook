@@ -74,6 +74,6 @@ elsif os.family == 'redhat'
   end
 end
 
-describe package('bareos') do
+describe package('bareos-common') do
   it { should be_installed }
 end

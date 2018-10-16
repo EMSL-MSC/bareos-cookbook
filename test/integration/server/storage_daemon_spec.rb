@@ -9,7 +9,7 @@ describe service('bareos-sd') do
   it { should be_running }
 end
 
-conf_path = '/etc/bareos'
+conf_path = '/etc/bareos/bareos-sd.d'
 
 %w(
   autochanger
@@ -19,7 +19,7 @@ conf_path = '/etc/bareos'
   ndmp
   storage
 ).each do |dir|
-  describe directory("#{conf_path}/bareos-sd.d/#{dir}") do
+  describe directory("#{conf_path}/#{dir}") do
     it { should exist }
   end
 end
@@ -35,7 +35,7 @@ end
   device/Example3.conf
   device/Example4.conf
 ).each do |config|
-  describe file("#{conf_path}/bareos-sd.d/#{config}") do
+  describe file("#{conf_path}/#{config}") do
     it { should exist }
     its('content') { should match(/Name = bareos-sd/) } if config == 'storage/bareos-sd.conf'
     its('content') { should match(/Director, who is permitted to contact this storage daemon/) } if config == 'director/bareos-dir.conf'
@@ -55,29 +55,29 @@ describe package('bareos-storage-tape') do
 end
 
 # file mtx-changer exists
-describe file("#{conf_path}/mtx-changer.conf") do
+describe file('/etc/bareos/mtx-changer.conf') do
   it { should exist }
 end
 
 %w(
   autochanger/autochanger-0.conf.example
   device/tapedrive-0.conf.example
-).each do |example_conf|
-  describe file("#{conf_path}/bareos-sd.d/#{example_conf}") do
+).each do |config|
+  describe file("#{conf_path}/#{config}") do
     it { should_not exist }
   end
 end
 
 %w(
-  test-autochanger1.conf
-  test-autochanger2.conf
-).each do |ac_config|
-  describe file("#{conf_path}/bareos-sd.d/autochanger/#{ac_config}") do
+  autochanger/test-autochanger1.conf
+  autochanger/test-autochanger2.conf
+).each do |config|
+  describe file("#{conf_path}/#{config}") do
     it { should exist }
-    its('content') { should match(/Example1/) } if ac_config == 'test-autochanger1.conf'
-    its('content') { should match(/Example2/) } if ac_config == 'test-autochanger1.conf'
-    its('content') { should match(/Example3/) } if ac_config == 'test-autochanger2.conf'
-    its('content') { should match(/Example4/) } if ac_config == 'test-autochanger2.conf'
+    its('content') { should match(/Example1/) } if config == 'test-autochanger1.conf'
+    its('content') { should match(/Example2/) } if config == 'test-autochanger1.conf'
+    its('content') { should match(/Example3/) } if config == 'test-autochanger2.conf'
+    its('content') { should match(/Example4/) } if config == 'test-autochanger2.conf'
     its('content') { should match(/mtx-changer %c %o %S %a %d/) }
   end
 end

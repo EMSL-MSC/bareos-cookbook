@@ -34,6 +34,8 @@ end
   end
 end
 
+bareos_catalog 'MyCatalog' if node['bareos']['use_custom_catalog'].nil?
+
 # Start and enable SD service
 service 'bareos-dir' do
   supports [status: true, restart: true, reload: false]

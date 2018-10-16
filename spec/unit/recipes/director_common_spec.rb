@@ -8,12 +8,11 @@ describe 'bareos::director_common' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          ChefSpec::ServerRunner.new(
+          ChefSpec::SoloRunner.new(
             platform: platform, version: version
           ) do |_node, _server|
           end.converge(described_recipe)
         end
-
         it 'converges successfully' do
           expect { chef_run }.to_not raise_error
         end
@@ -49,7 +48,9 @@ describe 'bareos::director_common' do
           end
           expect(chef_run).to create_directory('/etc/bareos/bareos-dir.d')
         end
-
+        it 'creates and bootstraps the defined Bareos Catalog' do
+          expect(chef_run).to create_bareos_catalog('MyCatalog')
+        end
         it 'enables and starts the bareos-dir service' do
           expect(chef_run).to enable_service('bareos-dir')
           expect(chef_run).to start_service('bareos-dir')

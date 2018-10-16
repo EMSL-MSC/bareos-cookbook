@@ -8,7 +8,7 @@ describe 'bareos::default' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          runner = ChefSpec::ServerRunner.new(platform: platform, version: version)
+          runner = ChefSpec::SoloRunner.new(platform: platform, version: version)
           runner.converge(described_recipe)
         end
         it 'converges successfully' do
@@ -28,7 +28,7 @@ describe 'bareos::default' do
           end
         end
         it 'installs bareos with the default action' do
-          expect(chef_run).to install_package('bareos')
+          expect(chef_run).to install_package('bareos-common')
         end
       end
     end

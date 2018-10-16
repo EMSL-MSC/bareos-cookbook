@@ -8,21 +8,10 @@ describe 'bareos-test::catalog_test' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          ChefSpec::ServerRunner.new(
+          ChefSpec::SoloRunner.new(
             platform: platform, version: version
-          ) do |_node, server|
-            server.create_data_bag(
-              'bareos',
-              'config' => {
-                'bareos' => {
-                  'services' => {
-                    "director": {
-                      "catalog": {
-                        "MyCatalog": {
-                          "dbname": 'bareos',
-                          "dbpassword": '',
-                          "dbuser": 'bareos',
-                        } } } } } })
+          ) do |node, _server|
+            node.normal['bareos']['use_custom_catalog'] = true
           end.converge(described_recipe)
         end
         it 'converges successfully' do

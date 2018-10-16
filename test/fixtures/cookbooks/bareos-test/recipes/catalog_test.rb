@@ -1,9 +1,15 @@
 # Test bareos_catalog resource
-node.default['bareos']['unmanage_default_catalog'] = true
-dev_config = chef_vault_item('bareos', 'config')
+node.default['bareos']['use_custom_catalog'] = true
 
-dev_config[:bareos][:services][:director][:catalog].each do |k, v|
-  bareos_catalog k do
-    catalog_config v
-  end
+bareos_catalog 'Verbose Catalog Example for Bareos' do
+  name 'MyCatalog'
+  catalog_config(
+    dbname: 'bareos',
+    dbuser: 'bareos',
+    dbpassword: ''
+  )
+  catalog_backend 'postgresql'
+  template_name 'catalog.erb'
+  template_cookbook 'bareos'
+  action :create
 end

@@ -27,8 +27,8 @@ end
 # Test bareos_graphite_poller custom resource
 plugin_config = chef_vault_item('bareos', 'config')
 
-plugin_config[:bareos][:graphite].each do |k, v|
-  bareos_graphite_poller k do
-    graphite_config v
+plugin_config[:bareos][:graphite].each do |poller_name, poller_config|
+  bareos_graphite_poller poller_name do
+    graphite_config poller_config
   end
 end

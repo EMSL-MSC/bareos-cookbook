@@ -1,6 +1,5 @@
 # Bareos Packages Default
 default['bareos']['packages'] = %w(bareos-common)
-default['bareos']['use_custom_catalog'] = nil
 
 # Repository
 default['bareos']['version'] = '18.2'

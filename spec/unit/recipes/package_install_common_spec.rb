@@ -8,10 +8,8 @@ describe 'bareos::package_install_common' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          ChefSpec::SoloRunner.new(
-            platform: platform, version: version
-          ) do |_node, _server|
-          end.converge(described_recipe)
+          runner = ChefSpec::SoloRunner.new(platform: platform, version: version)
+          runner.converge(described_recipe)
         end
         it 'converges successfully' do
           expect { chef_run }.to_not raise_error

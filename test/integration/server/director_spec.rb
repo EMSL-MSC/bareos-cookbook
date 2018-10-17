@@ -3,6 +3,7 @@
   bareos-director
   bareos-database-common
   bareos-database-tools
+  bareos-database-postgresql
 ).each do |pkg|
   describe package(pkg) do
     it { should be_installed }
@@ -43,5 +44,34 @@ end
   describe file("#{conf_path}/#{config}") do
     it { should exist }
     its('content') { should match(/Name = MyCatalog/) } if config == 'catalog/MyCatalog.conf'
+  end
+end
+
+describe directory('/etc/dbconfig-common') do
+  it { should exist }
+end
+
+%w(
+  config
+  bareos-database-common.conf
+).each do |config|
+  describe file("/etc/dbconfig-common/#{config}") do
+    it { should exist }
+    its('content') { should match(/dbc_install='false'/) } if config == 'bareos-database-common.conf'
+    its('content') { should match(/dbc_upgrade='false'/) } if config == 'bareos-database-common.conf'
+    its('content') { should match(/dbc_remove='false'/) } if config == 'bareos-database-common.conf'
+    its('content') { should match(/dbc_remember_admin_pass='false'/) } if config == 'config'
+    its('content') { should match(/dbc_remote_questions_default='false'/) } if config == 'config'
+  end
+end
+
+%w(
+  .dbcreated_MyCatalog
+  .dbtabcreated_MyCatalog
+  .dbtabupdated_MyCatalog
+  .dbprivgranted_MyCatalog
+).each do |state|
+  describe file("/var/lib/bareos/#{state}") do
+    it { should exist }
   end
 end

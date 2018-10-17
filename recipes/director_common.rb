@@ -1,4 +1,32 @@
+# Add default repos for Bareos Packages
 include_recipe 'bareos::package_repos_common'
+
+# Do the common things for all catalogs, shouldn't affect multiple cases
+# create the dbconfig-common if missing
+directory '/etc/dbconfig-common'
+
+# prevent auto db init on debian systems
+template 'dbconfig-common-bareos-database-common' do
+  source 'bareos-database-common.erb'
+  path '/etc/dbconfig-common/bareos-database-common.conf'
+  owner 'root'
+  group 'root'
+  mode '0600'
+  # only_if { platform_family?('debian') }
+end
+
+# managing this in case someone would like to overwrite it for debian systems
+template 'dbconfig-common-config' do
+  source 'bareos-database-config.erb'
+  path '/etc/dbconfig-common/config'
+  owner 'root'
+  group 'root'
+  mode '0600'
+  # only_if { platform_family?('debian') }
+end
+
+# Install base set of database tools to create a catalog
+package %w(bareos-database-tools bareos-database-common)
 
 package 'bareos-director'
 
@@ -34,7 +62,18 @@ end
   end
 end
 
-bareos_catalog 'MyCatalog' if node['bareos']['use_custom_catalog'].nil?
+# Deploy the single default Bareos Catalog
+bareos_director_catalog 'MyCatalog' do
+  catalog_config(
+    dbname: 'bareos',
+    dbuser: 'bareos',
+    dbpassword: ''
+  )
+  catalog_backend 'postgresql'
+  template_name 'director_catalog.erb'
+  template_cookbook 'bareos'
+  action :create
+end
 
 # Start and enable SD service
 service 'bareos-dir' do

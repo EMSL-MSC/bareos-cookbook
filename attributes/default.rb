@@ -2,7 +2,7 @@
 default['bareos']['packages'] = %w(bareos-common)
 
 # Repository
-default['bareos']['version'] = '18.2'
+default['bareos']['version'] = '17.2'
 default['bareos']['url'] = 'http://download.bareos.org/bareos/release'
 default['bareos']['contrib_url'] = 'http://download.bareos.org/bareos/contrib'
 

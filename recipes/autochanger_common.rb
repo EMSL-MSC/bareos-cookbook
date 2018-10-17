@@ -1,3 +1,6 @@
+# Add default repos for Bareos Packages
+include_recipe 'bareos::package_repos_common'
+
 # Manage mtx-changer config http://doc.bareos.org/master/html/bareos-manual-main-reference.html#QQ2-1-467
 package 'bareos-storage-tape'
 

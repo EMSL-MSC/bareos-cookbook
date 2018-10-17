@@ -1,3 +1,4 @@
+# Add default repos for Bareos Packages
 include_recipe 'bareos::package_repos_common'
 
 package 'bareos-storage'

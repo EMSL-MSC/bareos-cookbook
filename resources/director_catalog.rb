@@ -1,3 +1,9 @@
+# This resource deploys a single Bareos Catalog instance
+#
+# *NOTE* Bareos does NOT currently support multiple catalog deployments in the
+# same environment, this "could" do it but the database scripts do not allow
+# this behavior nor do they intend to do so in the foreseeable future
+# More info: http://doc.bareos.org/master/html/bareos-manual-main-reference.html#CurrentImplementationRestrictions
 
 property :catalog_config, Hash, default: {
   dbname: 'bareos',
@@ -5,30 +11,54 @@ property :catalog_config, Hash, default: {
   dbpassword: '',
 }
 property :catalog_backend, String, equal_to: %w(postgresql mysql), default: 'postgresql'
-property :template_name, String, default: 'catalog.erb'
+property :template_name, String, default: 'director_catalog.erb'
 property :template_cookbook, String, default: 'bareos'
+property :catalog_host, String, default: node['fqdn']
 
 default_action :create
 
-action :create do
-  # I am only inlcuding the bareos-director package here because it is a
-  # dependency of "bareos-dbcheck" which is called from the database scripts.
-  # This ideally shouldn't be the case but..it is.. So just in case, installing.
-  package %w(
-    bareos-director
-    bareos-database-common
-    bareos-database-tools
-  )
+action_class do
+  include BareosCookbook::Helper
+end
 
+action :create do
+  # Install base set of database tools to create a catalog
+  package %w(bareos-database-tools bareos-database-common)
+
+  # Determine Script Prefix and Database Backend Package
   case new_resource.catalog_backend
   when 'mysql'
     package 'bareos-database-mysql'
     script_prefix = ''
   else
     package 'bareos-database-postgresql'
-    script_prefix = 'su postgres -s /bin/bash -c '
+    script_prefix = 'su -s /bin/bash postgres -c '
   end
 
+  # If using PostgreSQL, add postgres user to bareos group per docs
+  group 'bareos' do
+    action :modify
+    members %w(bareos postgres)
+    append true
+    only_if { new_resource.catalog_backend == 'postgresql' }
+  end
+
+  directory '/etc/bareos/bareos-dir.d' do
+    owner 'bareos'
+    group 'bareos'
+    mode '0750'
+    action :create
+  end
+
+  directory "director_#{new_resource.name}_catalog_dir" do
+    path '/etc/bareos/bareos-dir.d/catalog'
+    owner 'bareos'
+    group 'bareos'
+    mode '0750'
+    action :create
+  end
+
+  # Manage the config for the Catalog
   template "director_catalog_#{new_resource.name}" do
     path "/etc/bareos/bareos-dir.d/catalog/#{new_resource.name}.conf"
     source new_resource.template_name
@@ -41,16 +71,11 @@ action :create do
       catalog_backend: new_resource.catalog_backend,
       catalog_config: new_resource.catalog_config
     )
+    notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create
   end
 
-  group 'bareos' do
-    action :modify
-    members %w(bareos postgres)
-    append true
-    only_if { new_resource.catalog_backend == 'postgresql' }
-  end
-
+  # Deploy the database
   bash "create_bareos_database_#{new_resource.name}" do
     code <<-DBCREATED
 #!/bin/bash

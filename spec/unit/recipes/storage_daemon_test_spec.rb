@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'bareos-test::storage_custom_resource_tests' do
+describe 'bareos-test::storage_daemon_test' do
   before do
     allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
   end

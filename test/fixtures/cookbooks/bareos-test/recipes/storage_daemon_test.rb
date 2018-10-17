@@ -1,3 +1,6 @@
+include_recipe 'bareos::autochanger_common'
+include_recipe 'bareos::storage_daemon_common'
+
 # Pulling hashes from databag but can also be node attributes
 data_bag_content = chef_vault_item('bareos', 'config')
 sd_config = data_bag_content[:bareos][:services][:storage_daemon]

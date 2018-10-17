@@ -8,10 +8,8 @@ describe 'bareos::director_common' do
     versions.each do |version|
       context "on an #{platform.capitalize}-#{version} box" do
         cached(:chef_run) do
-          ChefSpec::SoloRunner.new(
-            platform: platform, version: version
-          ) do |_node, _server|
-          end.converge(described_recipe)
+          runner = ChefSpec::SoloRunner.new(platform: platform, version: version)
+          runner.converge(described_recipe)
         end
         it 'converges successfully' do
           expect { chef_run }.to_not raise_error
@@ -26,6 +24,10 @@ describe 'bareos::director_common' do
           end
         end
         it 'installs bareos-director package' do
+          expect(chef_run).to install_package(%w(
+                                                bareos-database-tools
+                                                bareos-database-common
+                                              ))
           expect(chef_run).to install_package('bareos-director')
         end
         it 'creates director config dirs with the default action' do
@@ -48,8 +50,17 @@ describe 'bareos::director_common' do
           end
           expect(chef_run).to create_directory('/etc/bareos/bareos-dir.d')
         end
+        it 'creates a directory with the default action' do
+          expect(chef_run).to create_directory('/etc/dbconfig-common')
+        end
+        it 'creates a template with the default action' do
+          expect(chef_run).to create_template('dbconfig-common-bareos-database-common')
+        end
+        it 'creates a template with the default action' do
+          expect(chef_run).to create_template('dbconfig-common-config')
+        end
         it 'creates and bootstraps the defined Bareos Catalog' do
-          expect(chef_run).to create_bareos_catalog('MyCatalog')
+          expect(chef_run).to create_bareos_director_catalog('MyCatalog')
         end
         it 'enables and starts the bareos-dir service' do
           expect(chef_run).to enable_service('bareos-dir')

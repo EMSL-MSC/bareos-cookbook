@@ -15,7 +15,7 @@ if os.family == 'debian'
     if os.release.to_i == 8
       describe file(bareos_repo_path) do
         it { should exist }
-        its('content') { should match(%r{http://download.bareos.org/bareos/release/18.2/Debian_8.0/}) }
+        its('content') { should match(%r{http://download.bareos.org/bareos/release/17.2/Debian_8.0/}) }
       end
       describe file(bareos_contrib_repo_path) do
         it { should exist }
@@ -24,7 +24,7 @@ if os.family == 'debian'
     elsif os.release.to_i == 9
       describe file(bareos_repo_path) do
         it { should exist }
-        its('content') { should match(%r{http://download.bareos.org/bareos/release/18.2/Debian_9.0/}) }
+        its('content') { should match(%r{http://download.bareos.org/bareos/release/17.2/Debian_9.0/}) }
       end
       describe file(bareos_contrib_repo_path) do
         it { should exist }
@@ -35,7 +35,7 @@ if os.family == 'debian'
     if os.release.to_i == 14
       describe file(bareos_repo_path) do
         it { should exist }
-        its('content') { should match(%r{http://download.bareos.org/bareos/release/18.2/xUbuntu_14.04/}) }
+        its('content') { should match(%r{http://download.bareos.org/bareos/release/17.2/xUbuntu_14.04/}) }
       end
       describe file(bareos_contrib_repo_path) do
         it { should exist }
@@ -44,7 +44,7 @@ if os.family == 'debian'
     elsif os.release.to_i == 16
       describe file(bareos_repo_path) do
         it { should exist }
-        its('content') { should match(%r{http://download.bareos.org/bareos/release/18.2/xUbuntu_16.04/}) }
+        its('content') { should match(%r{http://download.bareos.org/bareos/release/17.2/xUbuntu_16.04/}) }
       end
       describe file(bareos_contrib_repo_path) do
         it { should exist }

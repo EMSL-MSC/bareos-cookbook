@@ -1,4 +1,4 @@
-# Deploys and manages a single Bareos Storage Autochanger
+# Deploys and manages a single Bareos Storage Autochanger Config
 
 property :autochanger_config, Hash, required: true
 property :template_cookbook, String, default: 'bareos'
@@ -11,16 +11,6 @@ action_class do
 end
 
 action :create do
-  package 'bareos-storage-tape'
-
-  directory "autochanger_#{new_resource.name}_path" do
-    path '/etc/bareos/bareos-sd.d/autochanger'
-    owner 'bareos'
-    group 'bareos'
-    mode '0750'
-    action :create
-  end
-
   template "autochanger_#{new_resource.name}_config" do
     source new_resource.template_name
     path "/etc/bareos/bareos-sd.d/autochanger/#{new_resource.name}.conf"

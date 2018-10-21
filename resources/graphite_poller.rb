@@ -1,4 +1,4 @@
-# Deploys and configures an instance of the Bareos graphite plugin
+# Deploys and configures an instance of the Bareos Graphite Plugin
 
 property :graphite_config, Hash, required: true
 property :src_dest_prefix, String, default: '/opt'

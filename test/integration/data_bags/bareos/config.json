@@ -20,27 +20,6 @@
       }
     },
     "services": {
-      "director": {
-        "catalog": {
-          "MyCatalog": {
-            "dbname": "bareos",
-            "dbpassword": "",
-            "dbuser": "bareos"
-          }
-        },
-        "daemon": {
-          "bareos-dir": {
-            "dir_password": "SECRETDIR1PASS",
-            "mon_password": "SECRETDIR1MONPASS"
-          }
-        }
-      },
-      "file_daemon": {
-        "bareos-fd": {
-          "fd_password": "SECRETFDPASS",
-          "mon_password": "SECRETFDMONPASS"
-        }
-      },
       "storage_daemon": {
         "autochanger": {
           "test-autochanger1": {

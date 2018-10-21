@@ -12,7 +12,6 @@ template 'dbconfig-common-bareos-database-common' do
   owner 'root'
   group 'root'
   mode '0600'
-  # only_if { platform_family?('debian') }
 end
 
 # managing this in case someone would like to overwrite it for debian systems
@@ -22,7 +21,6 @@ template 'dbconfig-common-config' do
   owner 'root'
   group 'root'
   mode '0600'
-  # only_if { platform_family?('debian') }
 end
 
 # Install base set of database tools to create a catalog

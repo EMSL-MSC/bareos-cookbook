@@ -11,16 +11,6 @@ action_class do
 end
 
 action :create do
-  package 'bareos-storage'
-
-  directory "storage_#{new_resource.name}_messages_dir" do
-    path '/etc/bareos/bareos-sd.d/messages'
-    owner 'bareos'
-    group 'bareos'
-    mode '0750'
-    action :create
-  end
-
   template "storage_#{new_resource.name}_messages_config" do
     source new_resource.template_name
     cookbook new_resource.template_cookbook

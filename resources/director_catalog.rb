@@ -43,21 +43,6 @@ action :create do
     only_if { new_resource.catalog_backend == 'postgresql' }
   end
 
-  directory '/etc/bareos/bareos-dir.d' do
-    owner 'bareos'
-    group 'bareos'
-    mode '0750'
-    action :create
-  end
-
-  directory "director_#{new_resource.name}_catalog_dir" do
-    path '/etc/bareos/bareos-dir.d/catalog'
-    owner 'bareos'
-    group 'bareos'
-    mode '0750'
-    action :create
-  end
-
   # Manage the config for the Catalog
   template "director_catalog_#{new_resource.name}" do
     path "/etc/bareos/bareos-dir.d/catalog/#{new_resource.name}.conf"

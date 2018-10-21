@@ -1,4 +1,4 @@
-# Deploys and manages a single Bareos Storage Device
+# Deploys and manages a single Bareos Storage Device Config
 
 property :device_config, Hash, required: true
 property :template_cookbook, String, default: 'bareos'
@@ -11,20 +11,10 @@ action_class do
 end
 
 action :create do
-  package 'bareos-storage'
-
-  directory "storage_#{new_resource.name}_device_dir" do
-    path '/etc/bareos/bareos-sd.d/device'
-    owner 'bareos'
-    group 'bareos'
-    mode '0750'
-    action :create
-  end
-
   template "storage_#{new_resource.name}_device_config" do
     source new_resource.template_name
-    path "/etc/bareos/bareos-sd.d/device/#{new_resource.name}.conf"
     cookbook new_resource.template_cookbook
+    path "/etc/bareos/bareos-sd.d/device/#{new_resource.name}.conf"
     owner 'bareos'
     group 'bareos'
     mode '0640'

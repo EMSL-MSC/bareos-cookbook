@@ -307,3 +307,66 @@ bareos_director_fileset 'Catalog' do
     }
   )
 end
+
+bareos_director_job 'BackupCatalog' do
+  job_config(
+    'Description' => '"Backup the catalog database (after the nightly save)"',
+    'JobDefs' => '"DefaultJob"',
+    'Level' => 'Full',
+    'FileSet' => '"Catalog"',
+    'Schedule' => '"WeeklyCycleAfterBackup"',
+    'RunBeforeJob' => '"/usr/lib/bareos/scripts/make_catalog_backup.pl MyCatalog"',
+    'RunAfterJob' => '"/usr/lib/bareos/scripts/delete_catalog_backup"',
+    'Write Bootstrap' => '"|/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \" -s \"Bootstrap for Job %j\" root@localhost" # (#01)',
+    'Priority' => '11'
+  )
+  job_runscript_config(
+    'from doc example' => {
+      'Command' => '"echo test"',
+      'Runs When' => 'After',
+      'Runs On Failure' => 'yes',
+      'Runs On Client'  => 'no',
+      'Runs On Success' => 'yes',
+    }
+  )
+end
+
+bareos_director_job 'backup-bareos-fd' do
+  job_config(
+    'Description' => '"Backup the default bareos client via bareos-fd"',
+    'JobDefs' => '"DefaultJob"',
+    'Client' => '"bareos-fd"'
+  )
+end
+
+bareos_director_job 'RestoreFiles' do
+  job_config(
+    'Description' => '"Standard Restore template. Only one such job is needed for all standard Jobs/Clients/Storage ..."',
+    'Type' => 'Restore',
+    'Client' => 'bareos-fd',
+    'FileSet' => '"LinuxAll"',
+    'Storage' => 'File',
+    'Pool' => 'Incremental',
+    'Messages' => 'Standard',
+    'Where' => '/tmp/bareos-restores'
+  )
+end
+
+bareos_director_jobdef 'DefaultJob' do
+  jobdef_config(
+    'Description' => '"This is the default jobdef provided by the Bareos package"',
+    'Type' => 'Backup',
+    'Level' => 'Incremental',
+    'Client' => 'bareos-fd',
+    'FileSet' => '"SelfTest"                     # selftest fileset                            (#13)',
+    'Schedule' => '"WeeklyCycle"',
+    'Storage' => 'File',
+    'Messages' => 'Standard',
+    'Pool' => 'Incremental',
+    'Priority' => '10',
+    'Write Bootstrap' => '"/var/lib/bareos/%c.bsr"',
+    'Full Backup Pool' => 'Full                  # write Full Backups into "Full" Pool         (#05)',
+    'Differential Backup Pool' => 'Differential  # write Diff Backups into "Differential" Pool (#08)',
+    'Incremental Backup Pool' => 'Incremental    # write Incr Backups into "Incremental" Pool  (#11)'
+  )
+end

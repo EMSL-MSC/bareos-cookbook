@@ -19,8 +19,8 @@ action :create do
     group 'bareos'
     mode '0640'
     variables(
-      messages_config: new_resource.messages_config,
-      messages_name: new_resource.name
+      messages_name: new_resource.name,
+      messages_config: new_resource.messages_config
     )
     notifies :restart, 'service[bareos-sd]', :delayed if bareos_resource?('service[bareos-sd]')
     action :create

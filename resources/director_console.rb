@@ -19,8 +19,8 @@ action :create do
     group 'bareos'
     mode '0640'
     variables(
-      console_config: new_resource.console_config,
-      console_name: new_resource.name
+      console_name: new_resource.name,
+      console_config: new_resource.console_config
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

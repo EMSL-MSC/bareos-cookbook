@@ -19,8 +19,8 @@ action :create do
     group 'bareos'
     mode '0640'
     variables(
-      schedule_config: new_resource.schedule_config,
-      schedule_name: new_resource.name
+      schedule_name: new_resource.name,
+      schedule_config: new_resource.schedule_config
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

@@ -19,8 +19,8 @@ action :create do
     group 'bareos'
     mode '0640'
     variables(
-      storage_config: new_resource.storage_config,
-      storage_name: new_resource.name
+      storage_name: new_resource.name,
+      storage_config: new_resource.storage_config
     )
     notifies :restart, 'service[bareos-sd]', :delayed if bareos_resource?('service[bareos-sd]')
     action :create

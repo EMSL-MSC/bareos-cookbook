@@ -19,8 +19,8 @@ action :create do
     group 'bareos'
     mode '0640'
     variables(
-      pool_config: new_resource.pool_config,
-      pool_name: new_resource.name
+      pool_name: new_resource.name,
+      pool_config: new_resource.pool_config
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

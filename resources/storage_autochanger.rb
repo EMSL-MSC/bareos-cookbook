@@ -19,8 +19,8 @@ action :create do
     group 'bareos'
     mode '0640'
     variables(
-      autochanger_config: new_resource.autochanger_config,
-      autochanger_name: new_resource.name
+      autochanger_name: new_resource.name,
+      autochanger_config: new_resource.autochanger_config
     )
     notifies :restart, 'service[bareos-sd]', :delayed if bareos_resource?('service[bareos-sd]')
     action :create

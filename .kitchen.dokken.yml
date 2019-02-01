@@ -36,6 +36,13 @@ platforms:
       pid_one_command: /lib/systemd/systemd
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
+  - name: ubuntu-18
+    driver:
+      image: dokken/ubuntu-18.04
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro # required by systemd
   - name: centos-6
     driver:
       image: dokken/centos-6
@@ -56,7 +63,11 @@ suites:
     run_list:
       - recipe[bareos-test]
       - recipe[bareos-test::pgsql]
+      - recipe[bareos-test::mysql]
       - recipe[bareos-test::python]
       - recipe[bareos-test::director_test]
-      - recipe[bareos-test::storage_daemon_test]
+      - recipe[bareos-test::autochanger_test]
+      - recipe[bareos-test::storage_test]
+      - recipe[bareos-test::client_test]
+      - recipe[bareos-test::console_test]
       - recipe[bareos-test::graphite_poller_test]

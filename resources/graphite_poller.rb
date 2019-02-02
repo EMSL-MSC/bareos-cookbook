@@ -13,6 +13,12 @@ property :manage_crontab, [true, false], default: true
 property :crontab_mail_to, String, default: ''
 
 action :create do
+  if platform?('ubuntu') && node['platform_version'].to_f >= 16.0
+    Chef::Log.fatal('The graphite_poller custom resource is not supported')
+    Chef::Log.fatal('on Ubuntu versions greater than 14 at this time.')
+    Chef::Log.fatal('Remove or guard this resource from running on these systems.')
+    raise
+  end
   package 'python-bareos'
 
   directory "#{new_resource.src_dest_prefix}/#{new_resource.name}" do

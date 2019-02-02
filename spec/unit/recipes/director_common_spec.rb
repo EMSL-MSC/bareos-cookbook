@@ -14,15 +14,6 @@ describe 'bareos::director_common' do
         it 'converges successfully' do
           expect { chef_run }.to_not raise_error
         end
-        %w(bareos bareos_contrib).each do |repo|
-          it "adds #{repo} repository" do
-            if platform =~ /^(ubuntu|debian)$/
-              expect(chef_run).to add_apt_repository(repo)
-            else
-              expect(chef_run).to create_yum_repository(repo)
-            end
-          end
-        end
         it 'installs bareos-director package' do
           expect(chef_run).to install_package(%w(
                                                 bareos-database-tools

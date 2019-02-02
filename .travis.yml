@@ -26,11 +26,13 @@ env:
   - T=server-debian-9
   - T=server-ubuntu-14
   - T=server-ubuntu-16
+  - T=server-ubuntu-18
   - T=server-centos-6
   - T=server-centos-7
 
 script:
   - chef gem install kitchen-dokken
+  - chef gem update fauxhai
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen test $T -d always
 
 jobs:

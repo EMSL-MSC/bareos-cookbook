@@ -2,7 +2,7 @@
 
 property :storage_config, Hash, required: true
 property :template_cookbook, String, default: 'bareos'
-property :template_name, String, default: 'storage_daemon.erb'
+property :template_name, String, default: 'storage_storage.erb'
 
 default_action :create
 

@@ -20,7 +20,7 @@
       }
     },
     "services": {
-      "storage_daemon": {
+      "storage": {
         "autochanger": {
           "test-autochanger1": {
             "Changer Command": [
@@ -128,26 +128,6 @@
           }
         },
         "director": {
-          "bareos-dir": {
-            "Description": [
-              "\"Director, who is permitted to contact this storage daemon.\""
-            ],
-            "Password": [
-              "\"SUPERNOTSECRETPASS\""
-            ]
-          }
-        },
-        "messages": {
-          "Standard": {
-            "Description": [
-              "\"Send all messages to the Director.\""
-            ],
-            "Director": [
-              "bareos-dir = all"
-            ]
-          }
-        },
-        "mon": {
           "bareos-mon": {
             "Description": [
               "\"Restricted Director, used by tray-monitor to get the status of this storage daemon.\""
@@ -157,6 +137,16 @@
             ],
             "Password": [
               "\"SUPERNOTSECRETPASS\""
+            ]
+          }
+        },
+        "message": {
+          "Standard": {
+            "Description": [
+              "\"Send all messages to the Director.\""
+            ],
+            "Director": [
+              "bareos-dir = all"
             ]
           }
         },

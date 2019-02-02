@@ -1,4 +1,5 @@
-# Validate the storage_daemon resources and test recipes
+# Validate the Storage resources and test recipes
+
 describe package('bareos-storage') do
   it { should be_installed }
 end

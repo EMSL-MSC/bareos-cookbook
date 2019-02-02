@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'bareos-test::storage_daemon_test' do
+describe 'bareos-test::storage_test' do
   before do
     allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
   end
@@ -16,7 +16,7 @@ describe 'bareos-test::storage_daemon_test' do
               'config' => {
                 'bareos' => {
                   'services' => {
-                    'storage_daemon' => {
+                    'storage' => {
                       'autochanger' =>  {
                         'test-autochanger1' =>  {
                           'Changer Command' =>  [
@@ -99,16 +99,13 @@ describe 'bareos-test::storage_daemon_test' do
                           'Description' =>  ['"Director"'],
                           'Password' =>  ['SUPERNOTSECRETPASS'],
                         },
-                      },
-                      'messages' =>  {
+                        'bareos-mon' =>  {
+                          'Description' =>  ['"Restricted Director"'],
+                        } },
+                      'message' =>  {
                         'Standard' =>  {
                           'Description' =>  ['"Send all"'],
                           'Director' =>  ['bareos-dir = all'],
-                        },
-                      },
-                      'mon' =>  {
-                        'bareos-mon' =>  {
-                          'Description' =>  ['"Restricted Director"'],
                         },
                       },
                     },
@@ -125,12 +122,10 @@ describe 'bareos-test::storage_daemon_test' do
         end
         it 'creates storage director config' do
           expect(chef_run).to create_bareos_storage_director('bareos-dir')
-        end
-        it 'creates storage mon configs' do
-          expect(chef_run).to create_bareos_storage_mon('bareos-mon')
+          expect(chef_run).to create_bareos_storage_director('bareos-mon')
         end
         it 'creates storage messages configs' do
-          expect(chef_run).to create_bareos_storage_messages('Standard')
+          expect(chef_run).to create_bareos_storage_message('Standard')
         end
         it 'creates storage device configs' do
           expect(chef_run).to create_bareos_storage_device('FileStorage')

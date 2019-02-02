@@ -2,7 +2,11 @@
 default['bareos']['packages'] = %w(bareos-common)
 
 # Repository
-default['bareos']['version'] = '17.2'
+default['bareos']['version'] = if platform?('ubuntu') && node['platform_version'].to_f >= 18.0
+                                 '18.2'
+                               else
+                                 '17.2'
+                               end
 default['bareos']['url'] = 'http://download.bareos.org/bareos/release'
 default['bareos']['contrib_url'] = 'http://download.bareos.org/bareos/contrib'
 

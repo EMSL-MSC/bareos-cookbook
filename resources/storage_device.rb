@@ -2,7 +2,7 @@
 
 property :device_config, Hash, required: true
 property :template_cookbook, String, default: 'bareos'
-property :template_name, String, default: 'storage_daemon_device.erb'
+property :template_name, String, default: 'storage_device.erb'
 
 default_action :create
 

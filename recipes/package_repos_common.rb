@@ -25,5 +25,6 @@ elsif platform_family?('debian')
     distribution ''
     key node['bareos']['contrib_gpgkey']
     action :add
+    not_if { platform?('ubuntu') && node['platform_version'].to_f >= 16.0 }
   end
 end

@@ -1,4 +1,5 @@
-# Validate the storage_daemon resources and test recipes
+# Validate the director resources and test recipes
+
 %w(
   bareos-director
   bareos-database-common

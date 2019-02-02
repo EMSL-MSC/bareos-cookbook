@@ -30,5 +30,6 @@ plugin_config = chef_vault_item('bareos', 'config')
 plugin_config[:bareos][:graphite].each do |poller_name, poller_config|
   bareos_graphite_poller poller_name do
     graphite_config poller_config
+    not_if { platform?('ubuntu') && node['platform_version'].to_f >= 16.0 }
   end
 end

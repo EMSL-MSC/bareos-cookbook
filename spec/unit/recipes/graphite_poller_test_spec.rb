@@ -34,15 +34,17 @@ describe 'bareos-test::graphite_poller_test' do
                     } } } })
           end.converge(described_recipe)
         end
-        it 'converges successfully' do
-          expect { chef_run }.to_not raise_error
-        end
-        it 'installs python requirements for graphite_poller' do
-          expect(chef_run).to run_bash('install_bareos_graphite_poller_requirements')
-        end
-        it 'deploys graphite_poller plugins' do
-          expect(chef_run).to create_bareos_graphite_poller('bareos_graphite_1')
-          expect(chef_run).to create_bareos_graphite_poller('bareos_graphite_2')
+        unless platform =~ /^(ubuntu)$/ && version =~ /^(16.04|18.04)$/
+          it 'converges successfully' do
+            expect { chef_run }.to_not raise_error
+          end
+          it 'installs python requirements for graphite_poller' do
+            expect(chef_run).to run_bash('install_bareos_graphite_poller_requirements')
+          end
+          it 'deploys graphite_poller plugins' do
+            expect(chef_run).to create_bareos_graphite_poller('bareos_graphite_1')
+            expect(chef_run).to create_bareos_graphite_poller('bareos_graphite_2')
+          end
         end
       end
     end

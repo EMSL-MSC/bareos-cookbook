@@ -47,8 +47,15 @@ if os.family == 'debian'
         its('content') { should match(%r{http://download.bareos.org/bareos/release/17.2/xUbuntu_16.04/}) }
       end
       describe file(bareos_contrib_repo_path) do
+        it { should_not exist }
+      end
+    elsif os.release.to_i == 18
+      describe file(bareos_repo_path) do
         it { should exist }
-        its('content') { should match(%r{http://download.bareos.org/bareos/contrib/xUbuntu_16.04/}) }
+        its('content') { should match(%r{http://download.bareos.org/bareos/release/17.2/xUbuntu_18.04/}) }
+      end
+      describe file(bareos_contrib_repo_path) do
+        it { should_not exist }
       end
     end
   end

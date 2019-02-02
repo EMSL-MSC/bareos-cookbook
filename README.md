@@ -8,6 +8,9 @@ This cookbook is intended to provide a Chef custom resource library for deployin
 
 Use of these custom resources can be instantiated by way of features such as chef-vault for secret management, chef attributes, chef databags, etc. They are heavily reliant on hash and/or arrays to drop configurations into place and should provide a lot of flexibility but also provide the structure needed to manage Bareos resources as described per Bareos documentation. Templates can be replaced in wrapper cookbooks by way of the Chef `edit_resource` functionality, or submit an issue for an official fix.
 
+## Deployment Considerations
+This cookbook does not and will not manage ancillary services for you such as PostgreSQL, MySQL, Python, Apache, Yum EPEL Repositories, etc. In the test fixture cookbook, there are some simple examples to get you going in the right direction. They are minimally configured for testing purposes only. You will need to make a plan to support a database type, Python, Apache/Nginx (optionally), and Yum EPEL repositories in RedHat based systems.
+
 ## Supported Platforms
 | Platform | Version                   |
 | -------- | ------------------------- |
@@ -64,8 +67,7 @@ Actively tested against an IBM TS3500 with 16 Drives and 3PB of LTO4 Tape cartri
 #### director_catalog
 Default action is `:create` which creates the necessary database schemas in PostgreSQL or MySQL via Bareos provided tools/scripts.
 
-##### __*NOTICE__ #####
-Do ___NOT___ create multiple catalogs for your installation per [Bareos Docs](http://doc.bareos.org/master/html/bareos-manual-main-reference.html#CurrentImplementationRestrictions)
+__WARNING:__ Do ___NOT___ create multiple catalogs for your installation per [Bareos Docs](http://doc.bareos.org/master/html/bareos-manual-main-reference.html#CurrentImplementationRestrictions)
 
 ##### Parameters
 - `catalog_config` - Hash, Defaults to bareos (db name, db user) and blank db password

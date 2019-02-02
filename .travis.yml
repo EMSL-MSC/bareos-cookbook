@@ -20,6 +20,7 @@ before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - chef --version
+  - chef gem update fauxhai
 
 env:
   - T=server-debian-8
@@ -32,7 +33,6 @@ env:
 
 script:
   - chef gem install kitchen-dokken
-  - chef gem update fauxhai
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen test $T -d always
 
 jobs:

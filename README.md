@@ -1,5 +1,7 @@
 # Chef bareos-cookbook
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Cookbook Version](https://img.shields.io/cookbook/v/bareos.svg)](https://supermarket.chef.io/cookbooks/bareos)
 [![Build Status](https://travis-ci.org/EMSL-MSC/bareos-cookbook.svg?branch=master)](https://travis-ci.org/EMSL-MSC/bareos-cookbook)
 
 Deploy and manage [Bareos](https://www.bareos.org) with Chef Custom Resources
@@ -721,3 +723,21 @@ bareos_graphite_poller 'bareos_graphite' do
   not_if { platform?('ubuntu') && node['platform_version'].to_f >= 16.0 }
 end
 ```
+
+# Contributing
+
+You fixed a bug, or added a new feature?
+
+1. File an issue with this repo
+2. Fork the repository on Github
+3. Create a named feature branch (like `add\_component\_x`)
+4. Write your change
+5. Write tests for your change (if applicable)
+6. Run the tests, ensuring they all pass
+7. Submit a Pull Request using Github, adding an issue tag like `Fixes #x`
+
+Contributions of any sort are very welcome!
+
+# Authors
+
+Authors: Ian Smith <gitbytes@gmail.com>

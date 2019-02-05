@@ -147,8 +147,8 @@ Default action is `:create` which generates a director console resource.
 ##### Parameters
 
 - `console_config` - Hash, input required
-- `template_cookbook` - String, defaults `'bareos'`
-- `template_name` - String, defaults `'director_console.erb'`
+- `template_cookbook` - String, default `'bareos'`
+- `template_name` - String, default `'director_console.erb'`
 
 ##### Example Usage
 
@@ -172,7 +172,7 @@ Default action is `:create` which generates a director director resource.
 
 - `director_config` - Hash, input required
 - `template_cookbook` - String, default `'bareos'`
-- `template_name` - String, defaults `'director_director.erb'`
+- `template_name` - String, default `'director_director.erb'`
 
 ##### Example Usage
 

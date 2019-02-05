@@ -8,6 +8,8 @@ bareos_director_schedule 'WeeklyCycleAfterBackup' do
     Run: ['Full mon-fri at 21:10']
   )
 end
+
+# Bareos Director Schedule Defaults and Examples
 bareos_director_schedule 'WeeklyCycle' do
   schedule_config(
     Run: [
@@ -17,6 +19,8 @@ bareos_director_schedule 'WeeklyCycle' do
     ]
   )
 end
+
+# Bareos Director Schedule Defaults and Examples
 bareos_director_schedule 'FirstOfMonthExample' do
   schedule_config(
     Run: [
@@ -51,6 +55,8 @@ end
 bareos_director_pool 'Scratch' do
   pool_config('Pool Type' => 'Scratch')
 end
+
+# Bareos Director Pool Defaults and Examples
 bareos_director_pool 'Incremental' do
   pool_config(
     'Pool Type' => 'Backup',
@@ -62,6 +68,8 @@ bareos_director_pool 'Incremental' do
     'Label Format' => '"Incremental-"'
   )
 end
+
+# Bareos Director Pool Defaults and Examples
 bareos_director_pool 'Full' do
   pool_config(
     'Pool Type' => 'Backup',
@@ -73,6 +81,8 @@ bareos_director_pool 'Full' do
     'Label Format' => '"Full-"'
   )
 end
+
+# Bareos Director Pool Defaults and Examples
 bareos_director_pool 'Differential' do
   pool_config(
     'Pool Type' => 'Backup',
@@ -104,7 +114,7 @@ bareos_director_client 'bareos-fd' do
   )
 end
 
-# Bareos Director Fileset Defaults and Examples
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'test-1-all' do
   fileset_custom_strings [
     '#custom string 1',
@@ -115,7 +125,7 @@ bareos_director_fileset 'test-1-all' do
     'include set 1' => {
       'options' => {
         'options 1 set 1' => [
-          '#ption 1 string 1',
+          '#option 1 string 1',
           '#option 1 string 2',
           '#option 1 string 3',
         ],
@@ -175,12 +185,14 @@ bareos_director_fileset 'test-1-all' do
   )
 end
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'test-2-custom-strings-only' do
   fileset_custom_strings [
     '#custom string 1',
   ]
 end
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'test-3-includes-only-with-nil' do
   fileset_include_config(
     'include set 1' => {
@@ -197,6 +209,7 @@ bareos_director_fileset 'test-3-includes-only-with-nil' do
   )
 end
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'test-4-excludes-only-with-empty' do
   fileset_exclude_config(
     'exclude set 1' => [
@@ -206,8 +219,10 @@ bareos_director_fileset 'test-4-excludes-only-with-empty' do
   )
 end
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'test-5-none'
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'Windows All Drives' do
   fileset_custom_strings [
     'Enable VSS = yes',
@@ -233,6 +248,7 @@ bareos_director_fileset 'Windows All Drives' do
   )
 end
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'SelfTest' do
   fileset_custom_strings [
     'Description = "fileset just to backup some files for selftest"',
@@ -251,6 +267,7 @@ bareos_director_fileset 'SelfTest' do
   )
 end
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'LinuxAll' do
   fileset_custom_strings [
     'Description = "Backup all regular filesystems, determined by filesystem type."',
@@ -289,6 +306,7 @@ bareos_director_fileset 'LinuxAll' do
   )
 end
 
+# Bareos Director FileSet Defaults and Examples
 bareos_director_fileset 'Catalog' do
   fileset_custom_strings [
     'Description = "Backup the catalog dump and Bareos configuration files."',
@@ -308,6 +326,7 @@ bareos_director_fileset 'Catalog' do
   )
 end
 
+# Bareos Director Job Defaults and Examples
 bareos_director_job 'BackupCatalog' do
   job_config(
     'Description' => '"Backup the catalog database (after the nightly save)"',
@@ -331,6 +350,7 @@ bareos_director_job 'BackupCatalog' do
   )
 end
 
+# Bareos Director Job Defaults and Examples
 bareos_director_job 'backup-bareos-fd' do
   job_config(
     'Description' => '"Backup the default bareos client via bareos-fd"',
@@ -339,6 +359,7 @@ bareos_director_job 'backup-bareos-fd' do
   )
 end
 
+# Bareos Director Job Defaults and Examples
 bareos_director_job 'RestoreFiles' do
   job_config(
     'Description' => '"Standard Restore template. Only one such job is needed for all standard Jobs/Clients/Storage ..."',
@@ -352,6 +373,7 @@ bareos_director_job 'RestoreFiles' do
   )
 end
 
+# Bareos Director JobDef Defaults and Examples
 bareos_director_jobdef 'DefaultJob' do
   jobdef_config(
     'Description' => '"This is the default jobdef provided by the Bareos package"',

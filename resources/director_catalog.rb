@@ -13,7 +13,6 @@ property :catalog_config, Hash, default: {
 property :catalog_backend, String, equal_to: %w(postgresql mysql), default: 'postgresql'
 property :template_name, String, default: 'director_catalog.erb'
 property :template_cookbook, String, default: 'bareos'
-property :catalog_host, String, default: node['fqdn']
 
 default_action :create
 

@@ -749,7 +749,7 @@ bareos_client_message 'Standard' do
 end
 ```
 
-#### Console
+### Console Custom Resources
 
 To help address some inconsistency with the Bareos config layout regarding console configuration(s) (i.e. no `bareos-console.d/` directory or similar), I am having to combine both the `bareos_console_console` and `bareos_console_director` resources into a single resources which configures `bconsole.conf`. If they change/fix their strategy on this in the future, the necessary changes will be made.
 

@@ -10,28 +10,7 @@ describe 'bareos-test::graphite_poller_test' do
         cached(:chef_run) do
           ChefSpec::ServerRunner.new(
             platform: platform, version: version
-          ) do |_node, server|
-            server.create_data_bag(
-              'bareos',
-              'config' => {
-                'bareos' => {
-                  'graphite' => {
-                    'bareos_graphite_1' =>  {
-                      'director_fqdn' =>  'localhost',
-                      'director_name' =>  'bareos-dir',
-                      'director_password' =>  'testpassnotsecret',
-                      'graphite_endpoint' =>  'graphite1',
-                      'graphite_port' =>  '2003',
-                      'graphite_prefix' =>  'bareos1.',
-                    },
-                    'bareos_graphite_2' =>  {
-                      'director_fqdn' =>  'localhost',
-                      'director_name' =>  'bareos-dir',
-                      'director_password' =>  'testpassnotsecret',
-                      'graphite_endpoint' =>  'graphite2',
-                      'graphite_port' =>  '2003',
-                      'graphite_prefix' =>  'bareos2.',
-                    } } } })
+          ) do |_node, _server|
           end.converge(described_recipe)
         end
         unless platform =~ /^(ubuntu)$/ && version =~ /^(16.04|18.04)$/

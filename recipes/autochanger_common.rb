@@ -21,6 +21,7 @@ end
 %w(
   /etc/bareos/bareos-sd.d/autochanger/autochanger-0.conf.example
   /etc/bareos/bareos-sd.d/device/tapedrive-0.conf.example
+  /etc/bareos/bareos-dir.d/storage/Tape.conf.example
 ).each do |example_conf|
   file example_conf do
     action :delete

@@ -1,6 +1,7 @@
 # Deploys and manages a single Bareos Storage NDMP Config
 
 property :ndmp_config, Hash, required: true
+property :ndmp_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'storage_ndmp.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       ndmp_name: new_resource.name,
-      ndmp_config: new_resource.ndmp_config
+      ndmp_config: new_resource.ndmp_config,
+      ndmp_custom_strings: new_resource.ndmp_custom_strings
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

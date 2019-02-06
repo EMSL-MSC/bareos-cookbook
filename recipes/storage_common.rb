@@ -28,8 +28,9 @@ end
   end
 end
 
-# Start and enable SD service
+# Start and enable Bareos Storage Daemon service
 service 'bareos-sd' do
   supports [status: true, restart: true, reload: false]
   action [:enable, :start]
+  ignore_failure true
 end

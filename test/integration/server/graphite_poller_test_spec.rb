@@ -19,7 +19,7 @@ unless os.name == 'ubuntu' && os.release.to_i >= 16
 
     describe file("/opt/#{plugin}/source/graphite-poller.conf") do
       it { should exist }
-      its('content') { should match(/password=testpassnotsecret/) }
+      its('content') { should match(/password=directordirectorsecret/) }
     end
 
     describe crontab('bareos') do

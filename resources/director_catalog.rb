@@ -11,6 +11,7 @@ property :catalog_config, Hash, default: {
   dbpassword: '',
 }
 property :catalog_backend, String, equal_to: %w(postgresql mysql), default: 'postgresql'
+property :catalog_custom_strings, Array, default: %w()
 property :template_name, String, default: 'director_catalog.erb'
 property :template_cookbook, String, default: 'bareos'
 
@@ -53,7 +54,8 @@ action :create do
     variables(
       catalog_name: new_resource.name,
       catalog_backend: new_resource.catalog_backend,
-      catalog_config: new_resource.catalog_config
+      catalog_config: new_resource.catalog_config,
+      catalog_custom_strings: new_resource.catalog_custom_strings
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

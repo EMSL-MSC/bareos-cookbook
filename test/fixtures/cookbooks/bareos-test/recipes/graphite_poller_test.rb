@@ -24,12 +24,28 @@ EOH
   end
 end
 
-# Test bareos_graphite_poller custom resource
-plugin_config = chef_vault_item('bareos', 'config')
+# Bareos Contrib Graphite Poller Plugin Defaults and Examples
+bareos_graphite_poller 'bareos_graphite_1' do
+  graphite_config(
+    'director_fqdn' => 'localhost',
+    'director_name' => 'bareos-dir',
+    'director_password' => 'directordirectorsecret',
+    'graphite_endpoint' => 'graphite1',
+    'graphite_port' => '2003',
+    'graphite_prefix' => 'bareos1.'
+  )
+  not_if { platform?('ubuntu') && node['platform_version'].to_f >= 16.0 }
+end
 
-plugin_config[:bareos][:graphite].each do |poller_name, poller_config|
-  bareos_graphite_poller poller_name do
-    graphite_config poller_config
-    not_if { platform?('ubuntu') && node['platform_version'].to_f >= 16.0 }
-  end
+# Bareos Contrib Graphite Poller Plugin Defaults and Examples
+bareos_graphite_poller 'bareos_graphite_2' do
+  graphite_config(
+    'director_fqdn' => 'localhost',
+    'director_name' => 'bareos-dir',
+    'director_password' => 'directordirectorsecret',
+    'graphite_endpoint' => 'graphite2',
+    'graphite_port' => '2003',
+    'graphite_prefix' => 'bareos2.'
+  )
+  not_if { platform?('ubuntu') && node['platform_version'].to_f >= 16.0 }
 end

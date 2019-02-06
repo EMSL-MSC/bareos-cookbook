@@ -17,39 +17,7 @@ describe 'bareos-test::storage_test' do
                 'bareos' => {
                   'services' => {
                     'storage' => {
-                      'autochanger' =>  {
-                        'test-autochanger1' =>  {
-                          'Changer Command' =>  [
-                            '"/usr/lib/bareos/scripts/mtx-changer %c %o %S %a %d"',
-                          ],
-                          'Changer Device' =>  [
-                            '/dev/tape/by-id/scsi-IBMLIBRARY1',
-                          ],
-                          'Description' =>  [
-                            '"test-autochanger1 config."',
-                          ],
-                          'Device' =>  %w(
-                            Example1
-                            Example2
-                          ),
-                        },
-                        'test-autochanger2' =>  {
-                          'Changer Command' =>  [
-                            '"/usr/lib/bareos/scripts/mtx-changer %c %o %S %a %d"',
-                          ],
-                          'Changer Device' =>  [
-                            '/dev/tape/by-id/scsi-IBMLIBRARY2',
-                          ],
-                          'Description' =>  [
-                            '"test-autochanger2 config."',
-                          ],
-                          'Device' =>  %w(
-                            Example3
-                            Example4
-                          ),
-                        },
-                      },
-                      "device": {
+                      'device' => {
                         "Example1": {
                           "AlwaysOpen": 'yes;',
                           "ArchiveDevice": '/dev/tape/by-id/scsi-IBMTAPEDRIVE1-nst',
@@ -87,27 +55,6 @@ describe 'bareos-test::storage_test' do
                           "Spool Directory": '/spool',
                         },
                       },
-                      'storage' => {
-                        'bareos-sd' => {
-                          'Description' => ['\"Default bareos-sd config.\"'],
-                          'Maximum Concurrent Jobs' => ['20'],
-                          'SDPort' => ['9103'],
-                        },
-                      },
-                      'director' =>  {
-                        'bareos-dir' =>  {
-                          'Description' =>  ['"Director"'],
-                          'Password' =>  ['SUPERNOTSECRETPASS'],
-                        },
-                        'bareos-mon' =>  {
-                          'Description' =>  ['"Restricted Director"'],
-                        } },
-                      'message' =>  {
-                        'Standard' =>  {
-                          'Description' =>  ['"Send all"'],
-                          'Director' =>  ['bareos-dir = all'],
-                        },
-                      },
                     },
                   },
                 },
@@ -131,10 +78,6 @@ describe 'bareos-test::storage_test' do
           expect(chef_run).to create_bareos_storage_device('FileStorage')
           expect(chef_run).to create_bareos_storage_device('Example1')
           expect(chef_run).to create_bareos_storage_device('Example2')
-        end
-        it 'creates storage autochanger configs' do
-          expect(chef_run).to create_bareos_storage_autochanger('test-autochanger1')
-          expect(chef_run).to create_bareos_storage_autochanger('test-autochanger2')
         end
       end
     end

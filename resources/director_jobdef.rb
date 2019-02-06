@@ -1,6 +1,7 @@
-# Deploys and manages a single Bareos Director JobDefs Config
+# Deploys and manages a single Bareos Director JobDef Config
 
 property :jobdef_config, Hash, required: true
+property :jobdef_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'director_jobdef.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       jobdef_name: new_resource.name,
-      jobdef_config: new_resource.jobdef_config
+      jobdef_config: new_resource.jobdef_config,
+      jobdef_custom_strings: new_resource.jobdef_custom_strings
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

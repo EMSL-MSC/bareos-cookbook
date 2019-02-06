@@ -4,15 +4,19 @@ include_recipe 'bareos::director_common'
 # Bareos Director Schedule Defaults and Examples
 bareos_director_schedule 'WeeklyCycleAfterBackup' do
   schedule_config(
-    Description: ['"This schedule does the catalog. It starts after the WeeklyCycle."'],
-    Run: ['Full mon-fri at 21:10']
+    'Description' => [
+      '"This schedule does the catalog. It starts after the WeeklyCycle."',
+    ],
+    'Run' => [
+      'Full mon-fri at 21:10',
+    ]
   )
 end
 
 # Bareos Director Schedule Defaults and Examples
 bareos_director_schedule 'WeeklyCycle' do
   schedule_config(
-    Run: [
+    'Run' => [
       'Full 1st sat at 21:00                   # (#04)',
       'Differential 2nd-5th sat at 21:00       # (#07)',
       'Incremental mon-fri at 21:00            # (#10)',
@@ -23,7 +27,7 @@ end
 # Bareos Director Schedule Defaults and Examples
 bareos_director_schedule 'FirstOfMonthExample' do
   schedule_config(
-    Run: [
+    'Run' => [
       'Level=Full on 1 at 2:05',
       'Level=Incremental on 2-31 at 2:05',
     ]
@@ -53,7 +57,9 @@ end
 
 # Bareos Director Pool Defaults and Examples
 bareos_director_pool 'Scratch' do
-  pool_config('Pool Type' => 'Scratch')
+  pool_config(
+    'Pool Type' => 'Scratch'
+  )
 end
 
 # Bareos Director Pool Defaults and Examples
@@ -99,7 +105,7 @@ end
 bareos_director_console 'bareos-mon' do
   console_config(
     'Description' => '"Restricted console used by tray-monitor to get the status of the director."',
-    'Password' => '"NOTSOSUPERSECRETPASSWORD"',
+    'Password' => '"directorconsolesecretmon"',
     'CommandACL' => 'status, .status',
     'JobACL' => '*all*'
   )
@@ -109,8 +115,8 @@ end
 bareos_director_client 'bareos-fd' do
   client_config(
     'Description' => '"Client resource of the Director itself."',
-    'Address' => 'localhost',
-    'Password' => '"ALSONOTSOSECRETAPASSWORDSOCHANGEIT"'
+    'Address' => node['fqdn'].to_s,
+    'Password' => '"clientdirectorsecretdir"'
   )
 end
 
@@ -320,7 +326,7 @@ bareos_director_fileset 'Catalog' do
       },
       'file' => [
         'File = "/var/lib/bareos/bareos.sql" # database dump',
-        'File = "/etc/bareos"                   # configuration',
+        'File = "/etc/bareos"                # configuration',
       ],
     }
   )
@@ -355,7 +361,7 @@ bareos_director_job 'backup-bareos-fd' do
   job_config(
     'Description' => '"Backup the default bareos client via bareos-fd"',
     'JobDefs' => '"DefaultJob"',
-    'Client' => '"bareos-fd"'
+    'Client' => "\"#{node['hostname']}-fd\""
   )
 end
 
@@ -364,7 +370,7 @@ bareos_director_job 'RestoreFiles' do
   job_config(
     'Description' => '"Standard Restore template. Only one such job is needed for all standard Jobs/Clients/Storage ..."',
     'Type' => 'Restore',
-    'Client' => 'bareos-fd',
+    'Client' => "#{node['hostname']}-fd",
     'FileSet' => '"LinuxAll"',
     'Storage' => 'File',
     'Pool' => 'Incremental',
@@ -379,7 +385,7 @@ bareos_director_jobdef 'DefaultJob' do
     'Description' => '"This is the default jobdef provided by the Bareos package"',
     'Type' => 'Backup',
     'Level' => 'Incremental',
-    'Client' => 'bareos-fd',
+    'Client' => "#{node['hostname']}-fd",
     'FileSet' => '"SelfTest"                     # selftest fileset                            (#13)',
     'Schedule' => '"WeeklyCycle"',
     'Storage' => 'File',
@@ -391,4 +397,79 @@ bareos_director_jobdef 'DefaultJob' do
     'Differential Backup Pool' => 'Differential  # write Diff Backups into "Differential" Pool (#08)',
     'Incremental Backup Pool' => 'Incremental    # write Incr Backups into "Incremental" Pool  (#11)'
   )
+end
+
+# Bareos Director Director Defaults and Examples
+bareos_director_director 'bareos-dir' do
+  director_config(
+    'QueryFile' => '"/usr/lib/bareos/scripts/query.sql"',
+    'Maximum Concurrent Jobs' => '10',
+    'Password' => '"directordirectorsecret"         # Console password',
+    'Messages' => 'Daemon',
+    'Auditing' => 'yes'
+  )
+end
+
+# Bareos Director Message Defaults and Examples
+bareos_director_message 'Daemon' do
+  message_config(
+    'Description' => '"Message delivery for daemon messages (no job)."',
+    'mailcommand' => '"/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \<%r\>\" -s \"Bareos daemon message\" %r"',
+    'mail' => 'root@localhost = all, !skipped, !audit # (#02)',
+    'console' => 'all, !skipped, !saved, !audit'
+  )
+  message_custom_strings [
+    'append = "/var/log/bareos/bareos.log" = all, !skipped, !audit',
+    'append = "/var/log/bareos/bareos-audit.log" = audit',
+  ]
+end
+
+# Bareos Director Message Defaults and Examples
+bareos_director_message 'Standard' do
+  message_config(
+    'Description' => '"Reasonable message delivery -- send most everything to email address and to the console."',
+    'operatorcommand' => '"/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \<%r\>\" -s \"Bareos: Intervention needed for %j\" %r"',
+    'mailcommand' => '"/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \<%r\>\" -s \"Bareos: %t %e of %c %l\" %r"',
+    'operator' => 'root@localhost = mount                                 # (#03)',
+    'mail' => 'root@localhost = all, !skipped, !saved, !audit             # (#02)',
+    'console' => 'all, !skipped, !saved, !audit',
+    'catalog' => 'all, !skipped, !saved, !audit'
+  )
+  message_custom_strings [
+    'append = "/var/log/bareos/bareos.log" = all, !skipped, !saved, !audit',
+  ]
+end
+
+# Bareos Director Storage Defaults and Examples
+bareos_director_storage 'File' do
+  storage_config(
+    'Address' => "#{node['fqdn']}   # N.B. Use a fully qualified name here (do not use \"localhost\" here).",
+    'Password' => '"storagedirectorsecretdir"',
+    'Device' => 'FileStorage',
+    'Media Type' => 'File'
+  )
+end
+
+# Bareos Director Storage Defaults and Examples
+bareos_director_storage 'autochanger-1-test' do
+  storage_config(
+    'Address' => "#{node['fqdn']}   # N.B. Use a fully qualified name here (do not use \"localhost\" here).",
+    'Password' => '"storagedirectorsecretdir"',
+    'Device' => 'autochanger-1-test',
+    'Media Type' => 'LTO-4',
+    'Auto Changer' => 'yes'
+  )
+  # action :nothing
+end
+
+# Bareos Director Storage Defaults and Examples
+bareos_director_storage 'autochanger-2-test' do
+  storage_config(
+    'Address' => "#{node['fqdn']}   # N.B. Use a fully qualified name here (do not use \"localhost\" here).",
+    'Password' => '"storagedirectorsecretdir"',
+    'Device' => 'autochanger-2-test',
+    'Media Type' => 'LTO-4',
+    'Auto Changer' => 'yes'
+  )
+  # action :nothing
 end

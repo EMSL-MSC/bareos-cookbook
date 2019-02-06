@@ -15,4 +15,7 @@ Job {
   <% end unless runscript_components.nil? %>
   }
 <% end unless @job_runscript_config.nil? %>
+<% @job_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @job_custom_strings.nil? %>
 }

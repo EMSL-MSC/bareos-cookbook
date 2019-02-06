@@ -4,11 +4,11 @@
 # Bareos Graphite Poller Configuration File
 
 [director]
-server=<%= @graphite_config[:director_fqdn] %>
-name=<%= @graphite_config[:director_name] %>
-password=<%= @graphite_config[:director_password] %>
+server=<%= @graphite_config['director_fqdn'] %>
+name=<%= @graphite_config['director_name'] %>
+password=<%= @graphite_config['director_password'] %>
 
 [graphite]
-server=<%= @graphite_config[:graphite_endpoint] %>
-port=<%= @graphite_config[:graphite_port] %>
-prefix=<%= @graphite_config[:graphite_prefix] %>
+server=<%= @graphite_config['graphite_endpoint'] %>
+port=<%= @graphite_config['graphite_port'] %>
+prefix=<%= @graphite_config['graphite_prefix'] %>

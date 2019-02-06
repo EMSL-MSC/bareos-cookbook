@@ -1,6 +1,7 @@
 # Deploys and manages a single Bareos Director Pool Config
 
 property :pool_config, Hash, required: true
+property :pool_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'director_pool.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       pool_name: new_resource.name,
-      pool_config: new_resource.pool_config
+      pool_config: new_resource.pool_config,
+      pool_custom_strings: new_resource.pool_custom_strings
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

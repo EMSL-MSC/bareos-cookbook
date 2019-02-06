@@ -1,6 +1,7 @@
 # Deploys and manages a single Bareos Director Schedule Config
 
 property :schedule_config, Hash, required: true
+property :schedule_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'director_schedule.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       schedule_name: new_resource.name,
-      schedule_config: new_resource.schedule_config
+      schedule_config: new_resource.schedule_config,
+      schedule_custom_strings: new_resource.schedule_custom_strings
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

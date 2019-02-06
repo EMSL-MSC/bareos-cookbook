@@ -58,7 +58,8 @@ action :create do
     command %W(
       source #{new_resource.plugin_virtualenv_path}/bin/activate &&
       python #{new_resource.src_dest_prefix}/#{new_resource.name}/source/bareos-graphite-poller.py
-      -c #{new_resource.src_dest_prefix}/#{new_resource.name}/source/graphite-poller.conf > /dev/null 2>&1
+      -c #{new_resource.src_dest_prefix}/#{new_resource.name}/source/graphite-poller.conf > /dev/null 2>&1;
+      deactivate
     ).join(' ')
     only_if { new_resource.manage_crontab }
   end

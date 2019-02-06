@@ -1,44 +1,73 @@
 # Including the common Storage tasks so the resources will function
 include_recipe 'bareos::storage_common'
 
-# Pulling hashes from databag but can also be node attributes
+# Example of pulling configs from databags/vaults but can also be node attributes
 data_bag_content = chef_vault_item('bareos', 'config')
-sd_config = data_bag_content[:bareos][:services][:storage]
+sd_device_config = data_bag_content['bareos']['services']['storage']['device']
+
+# Bareos Storage Device Config Defaults and Examples
+sd_device_config.each do |device_name, device_config|
+  bareos_storage_device device_name do
+    device_config device_config
+    # action :nothing
+  end
+end
 
 # Bareos Storage Storage Config Defaults and Examples
-sd_config[:storage].each do |storage_name, storage_config|
-  bareos_storage_storage storage_name do
-    storage_config storage_config
-  end
+bareos_storage_storage 'bareos-sd' do
+  storage_config(
+    'Description' => [
+      '"Default bareos-sd config."',
+    ],
+    'Maximum Concurrent Jobs': [
+      '20',
+    ],
+    'SDPort': [
+      '9103',
+    ]
+  )
 end
 
 # Bareos Storage Director Config Defaults and Examples
-sd_config[:director].each do |director_name, director_config|
-  bareos_storage_director director_name do
-    director_config director_config
-  end
+bareos_storage_director 'bareos-dir' do
+  director_config(
+    'Description' => [
+      '"Director, who is permitted to contact this storage daemon."',
+    ],
+    'Password' => [
+      '"storagedirectorsecretdir"',
+    ]
+  )
+end
+
+# Bareos Storage Director Config Defaults and Examples
+bareos_storage_director 'bareos-mon' do
+  director_config(
+    'Description' => [
+      '"Restricted Director, used by tray-monitor to get the status of this storage daemon."',
+    ],
+    'Monitor' => [
+      'yes',
+    ],
+    'Password' => [
+      '"storagedirectorsecretmon"',
+    ]
+  )
 end
 
 # Bareos Storage Message Config Defaults and Examples
-sd_config[:message].each do |message_name, message_config|
-  bareos_storage_message message_name do
-    message_config message_config
-  end
-end
-
-# Bareos Storage Autochanger Config Defaults and Examples
-sd_config[:autochanger].each do |autochanger_name, autochanger_config|
-  bareos_storage_autochanger autochanger_name do
-    autochanger_config autochanger_config
-  end
+bareos_storage_message 'Standard' do
+  message_config(
+    'Description' => [
+      '"Send all messages to the Director."',
+    ],
+    'Director' => [
+      'bareos-dir = all',
+    ]
+  )
 end
 
 # Bareos Storage Device Config Defaults and Examples
-sd_config[:device].each do |device_name, device_config|
-  bareos_storage_device device_name do
-    device_config device_config
-  end
-end
 bareos_storage_device 'FileStorage' do
   device_config(
     'Media Type' => 'File',

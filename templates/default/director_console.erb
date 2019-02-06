@@ -8,4 +8,7 @@ Console {
 <% @console_config.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
+<% @console_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @console_custom_strings.nil? %>
 }

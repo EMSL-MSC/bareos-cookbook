@@ -1,6 +1,7 @@
 # Deploys and manages a single Bareos Director Profile Config
 
 property :profile_config, Hash, required: true
+property :profile_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'director_profile.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       profile_name: new_resource.name,
-      profile_config: new_resource.profile_config
+      profile_config: new_resource.profile_config,
+      profile_custom_strings: new_resource.profile_custom_strings
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

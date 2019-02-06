@@ -1,6 +1,7 @@
 # Deploys and manages a single Bareos Storage Storage Config
 
 property :storage_config, Hash, required: true
+property :storage_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'storage_storage.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       storage_name: new_resource.name,
-      storage_config: new_resource.storage_config
+      storage_config: new_resource.storage_config,
+      storage_custom_strings: new_resource.storage_custom_strings
     )
     notifies :restart, 'service[bareos-sd]', :delayed if bareos_resource?('service[bareos-sd]')
     action :create

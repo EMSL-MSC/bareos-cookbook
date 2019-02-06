@@ -1,58 +1,8 @@
 {
   "id": "config",
   "bareos": {
-    "graphite": {
-      "bareos_graphite_1": {
-        "director_fqdn": "localhost",
-        "director_name": "bareos-dir",
-        "director_password": "testpassnotsecret",
-        "graphite_endpoint": "graphite1",
-        "graphite_port": "2003",
-        "graphite_prefix": "bareos1."
-      },
-      "bareos_graphite_2": {
-        "director_fqdn": "localhost",
-        "director_name": "bareos-dir",
-        "director_password": "testpassnotsecret",
-        "graphite_endpoint": "graphite2",
-        "graphite_port": "2003",
-        "graphite_prefix": "bareos2."
-      }
-    },
     "services": {
       "storage": {
-        "autochanger": {
-          "test-autochanger1": {
-            "Changer Command": [
-              "\"/usr/lib/bareos/scripts/mtx-changer %c %o %S %a %d\""
-            ],
-            "Changer Device": [
-              "/dev/tape/by-id/scsi-IBMLIBRARY1"
-            ],
-            "Description": [
-              "\"test-autochanger1 config.\""
-            ],
-            "Device": [
-              "Example1",
-              "Example2"
-            ]
-          },
-          "test-autochanger2": {
-            "Changer Command": [
-              "\"/usr/lib/bareos/scripts/mtx-changer %c %o %S %a %d\""
-            ],
-            "Changer Device": [
-              "/dev/tape/by-id/scsi-IBMLIBRARY2"
-            ],
-            "Description": [
-              "\"test-autochanger2 config.\""
-            ],
-            "Device": [
-              "Example3",
-              "Example4"
-            ]
-          }
-        },
         "device": {
           "Example1": {
             "AlwaysOpen": "yes;",
@@ -125,42 +75,6 @@
             "Maximum Spool Size": "50G",
             "MediaType": "LTO-4",
             "Spool Directory": "/spool"
-          }
-        },
-        "director": {
-          "bareos-mon": {
-            "Description": [
-              "\"Restricted Director, used by tray-monitor to get the status of this storage daemon.\""
-            ],
-            "Monitor": [
-              "yes"
-            ],
-            "Password": [
-              "\"SUPERNOTSECRETPASS\""
-            ]
-          }
-        },
-        "message": {
-          "Standard": {
-            "Description": [
-              "\"Send all messages to the Director.\""
-            ],
-            "Director": [
-              "bareos-dir = all"
-            ]
-          }
-        },
-        "storage": {
-          "bareos-sd": {
-            "Description": [
-              "\"Default bareos-sd config.\""
-            ],
-            "Maximum Concurrent Jobs": [
-              "20"
-            ],
-            "SDPort": [
-              "9103"
-            ]
           }
         }
       }

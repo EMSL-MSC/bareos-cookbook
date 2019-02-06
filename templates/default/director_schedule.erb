@@ -10,4 +10,7 @@ Schedule {
   <%= component_type %> = <%= value %>
 <%   end %>
 <% end %>
+<% @schedule_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @schedule_custom_strings.nil? %>
 }

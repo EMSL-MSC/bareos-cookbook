@@ -9,4 +9,7 @@ Catalog {
 <% @catalog_config.each do |key, value| %>
   <%= key %> = "<%= value %>"
 <% end %>
+<% @catalog_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @catalog_custom_strings.nil? %>
 }

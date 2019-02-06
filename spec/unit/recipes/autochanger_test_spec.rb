@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'bareos::autochanger_common' do
+describe 'bareos-test::autochanger_test' do
   before do
     allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
   end
@@ -32,6 +32,10 @@ describe 'bareos::autochanger_common' do
           ).each do |example_conf|
             expect(chef_run).to delete_file(example_conf)
           end
+        end
+        it 'creates storage autochanger configs' do
+          expect(chef_run).to create_bareos_storage_autochanger('autochanger-1-test')
+          expect(chef_run).to create_bareos_storage_autochanger('autochanger-2-test')
         end
       end
     end

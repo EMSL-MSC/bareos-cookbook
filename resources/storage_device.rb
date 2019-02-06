@@ -1,6 +1,7 @@
 # Deploys and manages a single Bareos Storage Device Config
 
 property :device_config, Hash, required: true
+property :device_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'storage_device.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       device_name: new_resource.name,
-      device_config: new_resource.device_config
+      device_config: new_resource.device_config,
+      device_custom_strings: new_resource.device_custom_strings
     )
     notifies :restart, 'service[bareos-sd]', :delayed if bareos_resource?('service[bareos-sd]')
     action :create

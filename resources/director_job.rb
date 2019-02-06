@@ -2,6 +2,7 @@
 
 property :job_config, Hash, required: true
 property :job_runscript_config, Hash, default: {}
+property :job_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'director_job.erb'
 
@@ -22,7 +23,8 @@ action :create do
     variables(
       job_name: new_resource.name,
       job_config: new_resource.job_config,
-      job_runscript_config: new_resource.job_runscript_config
+      job_runscript_config: new_resource.job_runscript_config,
+      job_custom_strings: new_resource.job_custom_strings
     )
     notifies :restart, 'service[bareos-dir]', :delayed if bareos_resource?('service[bareos-dir]')
     action :create

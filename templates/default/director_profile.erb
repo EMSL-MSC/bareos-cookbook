@@ -10,4 +10,7 @@ Profile {
   <%= component_type %> = <%= value %>
 <%   end %>
 <% end %>
+<% @profile_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @profile_custom_strings.nil? %>
 }

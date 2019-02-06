@@ -10,4 +10,7 @@ Autochanger {
   <%= component_type %> = <%= value %>
 <%   end %>
 <% end %>
+<% @autochanger_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @autochanger_custom_strings.nil? %>
 }

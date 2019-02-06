@@ -8,4 +8,7 @@ Storage {
 <% @storage_config.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
+<% @storage_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @storage_custom_strings.nil? %>
 }

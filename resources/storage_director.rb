@@ -1,6 +1,7 @@
 # Deploys and manages a single Bareos Storage Director Config
 
 property :director_config, Hash, required: true
+property :director_custom_strings, Array, default: %w()
 property :template_cookbook, String, default: 'bareos'
 property :template_name, String, default: 'storage_director.erb'
 
@@ -20,7 +21,8 @@ action :create do
     mode '0640'
     variables(
       director_name: new_resource.name,
-      director_config: new_resource.director_config
+      director_config: new_resource.director_config,
+      director_custom_strings: new_resource.director_custom_strings
     )
     notifies :restart, 'service[bareos-sd]', :delayed if bareos_resource?('service[bareos-sd]')
     action :create

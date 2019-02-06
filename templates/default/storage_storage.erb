@@ -10,4 +10,7 @@ Storage {
   <%= component_type %> = <%= value %>
 <%   end %>
 <% end %>
+<% @storage_custom_strings.each do |string| %>
+  <%= string %>
+<% end unless @storage_custom_strings.nil? %>
 }

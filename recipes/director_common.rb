@@ -63,9 +63,9 @@ end
 # Deploy the single default Bareos Catalog
 bareos_director_catalog 'MyCatalog' do
   catalog_config(
-    dbname: 'bareos',
-    dbuser: 'bareos',
-    dbpassword: ''
+    'dbname' => 'bareos',
+    'dbuser' => 'bareos',
+    'dbpassword' => ''
   )
   catalog_backend 'postgresql'
   template_name 'director_catalog.erb'
@@ -73,8 +73,9 @@ bareos_director_catalog 'MyCatalog' do
   action :create
 end
 
-# Start and enable SD service
+# Start and enable Bareos Director service
 service 'bareos-dir' do
   supports [status: true, restart: true, reload: false]
   action [:enable, :start]
+  ignore_failure true
 end

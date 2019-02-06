@@ -74,15 +74,15 @@ Storage     | X        |        | X       |
 
 These and other examples are found under `test/fixtures/cookbooks/bareos-test`.
 
-### Director
+## Director Custom Resources
 
-#### bareos_director_catalog
+### bareos_director_catalog
 
 Default action is `:create` which creates the necessary database, schemas, and authentication for PostgreSQL or MySQL via Bareos provided tools/scripts.
 
 **WARNING:** Do **_NOT_** create multiple catalogs for your installation per [Bareos Docs](http://doc.bareos.org/master/html/bareos-manual-main-reference.html#CurrentImplementationRestrictions)
 
-##### Parameters
+#### Parameters
 
 - `catalog_config` - Hash, default:
 
@@ -95,13 +95,14 @@ Default action is `:create` which creates the necessary database, schemas, and a
   ```
 
 - `catalog_backend` - String, default `'postgresql'` and only accepts one of `'postgresql'` or `'mysql'`
+
 - `catalog_custom_strings` - Array, default `%w()`
 
 - `template_name` - String, default `'director_catalog.erb'`
 
 - `template_cookbook` - String, default `'bareos'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Deploy the single default Bareos Catalog
@@ -118,18 +119,18 @@ bareos_director_catalog 'MyCatalog' do
 end
 ```
 
-#### bareos_director_client
+### bareos_director_client
 
 Default action is `:create` which generates a director client resource.
 
-##### Parameters
+#### Parameters
 
 - `client_config` - Hash, input required
 - `client_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_client.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Client Defaults and Examples
@@ -142,18 +143,18 @@ bareos_director_client 'bareos-fd' do
 end
 ```
 
-#### bareos_director_console
+### bareos_director_console
 
 Default action is `:create` which generates a director console resource.
 
-##### Parameters
+#### Parameters
 
 - `console_config` - Hash, input required
 - `console_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_console.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Console Defaults and Examples
@@ -167,20 +168,20 @@ bareos_director_console 'bareos-mon' do
 end
 ```
 
-#### bareos_director_director
+### bareos_director_director
 
 Default action is `:create` which generates a director director resource.
 
 **WARNING:** Only a single Director resource is allowed per [Bareos Docs](http://doc.bareos.org/master/html/bareos-manual-main-reference.html#x1-1350009.1)
 
-##### Parameters
+#### Parameters
 
 - `director_config` - Hash, input required
 - `director_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_director.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Director Defaults and Examples
@@ -195,11 +196,11 @@ bareos_director_director 'bareos-dir' do
 end
 ```
 
-#### bareos_director_fileset
+### bareos_director_fileset
 
 Default action is `:create` which generates a director fileset resource.
 
-##### Parameters
+#### Parameters
 
 - `fileset_custom_strings` - Array, default `%w()`
 - `fileset_include_config` - Hash, default `{}`
@@ -207,7 +208,7 @@ Default action is `:create` which generates a director fileset resource.
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_fileset.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director FileSet Defaults and Examples
@@ -282,11 +283,11 @@ bareos_director_fileset 'test-1-all' do
 end
 ```
 
-#### bareos_director_job
+### bareos_director_job
 
 Default action is `:create` which generates a director job resource.
 
-##### Parameters
+#### Parameters
 
 - `job_config` - Hash, input required
 - `job_runscript_config` - Hash, default `{}`
@@ -294,7 +295,7 @@ Default action is `:create` which generates a director job resource.
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_job.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Job Defaults and Examples
@@ -322,18 +323,18 @@ bareos_director_job 'BackupCatalog' do
 end
 ```
 
-#### bareos_director_jobdef
+### bareos_director_jobdef
 
 Default action is `:create` which generates a director jobdef resource.
 
-##### Parameters
+#### Parameters
 
 - `jobdef_config` - Hash, input required
 - `jobdef_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default: `'bareos'`
 - `template_name` - String, default `'director_jobdef.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director JobDef Defaults and Examples
@@ -357,18 +358,18 @@ bareos_director_jobdef 'DefaultJob' do
 end
 ```
 
-#### bareos_director_message
+### bareos_director_message
 
 Default action is `:create` which generates a director message resource.
 
-##### Parameters
+#### Parameters
 
 - `message_config` - Hash, input required
 - `message_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_message.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Message Defaults and Examples
@@ -388,18 +389,18 @@ bareos_director_message 'Standard' do
 end
 ```
 
-#### bareos_director_pool
+### bareos_director_pool
 
 Default action is `:create` which generates a director pool resource.
 
-##### Parameters
+#### Parameters
 
 - `pool_config` - Hash, input required
 - `pool_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_pool.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Pool Defaults and Examples
@@ -416,18 +417,18 @@ bareos_director_pool 'Incremental' do
 end
 ```
 
-#### bareos_director_profile
+### bareos_director_profile
 
 Default action is `:create` which generates a director profile resource.
 
-##### Parameters
+#### Parameters
 
 - `profile_config` - Hash, input required
 - `profile_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_profile.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Profile Defaults and Examples
@@ -452,18 +453,18 @@ bareos_director_profile 'operator' do
 end
 ```
 
-#### bareos_director_schedule
+### bareos_director_schedule
 
 Default action is `:create` which generates a director schedule resource.
 
-##### Parameters
+#### Parameters
 
 - `schedule_config` - Hash, input required
 - `schedule_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_schedule.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Schedule Defaults and Examples
@@ -478,18 +479,18 @@ bareos_director_schedule 'WeeklyCycle' do
 end
 ```
 
-#### bareos_director_storage
+### bareos_director_storage
 
 Default action is `:create` which generates a director storage resource.
 
-##### Parameters
+#### Parameters
 
 - `storage_config` - Hash, input required
 - `storage_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'director_storage.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Director Storage Defaults and Examples
@@ -503,20 +504,20 @@ bareos_director_storage 'File' do
 end
 ```
 
-### Storage
+## Storage Custom Resources
 
-#### bareos_storage_autochanger
+### bareos_storage_autochanger
 
 Default action is `:create` which generates a storage autochanger resource.
 
-##### Parameters
+#### Parameters
 
 - `autochanger_config` - Hash, input required
 - `autochanger_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'storage_autochanger.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Storage Autochanger Config Defaults and Examples
@@ -539,18 +540,18 @@ bareos_storage_autochanger 'autochanger-1-test' do
 end
 ```
 
-#### bareos_storage_device
+### bareos_storage_device
 
 Default action is `:create` which generates a storage device resource.
 
-##### Parameters
+#### Parameters
 
 - `device_config` - Hash, input required
 - `device_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'storage_device.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Storage Device Config Defaults and Examples
@@ -568,18 +569,18 @@ bareos_storage_device 'FileStorage' do
 end
 ```
 
-#### bareos_storage_director
+### bareos_storage_director
 
 Default action is `:create` which generates a storage director resource.
 
-##### Parameters
+#### Parameters
 
 - `director_config` - Hash, input required
 - `director_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'storage_director.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Storage Director Config Defaults and Examples
@@ -595,18 +596,18 @@ bareos_storage_director 'bareos-dir' do
 end
 ```
 
-#### bareos_storage_message
+### bareos_storage_message
 
 Default action is `:create` which generates a storage message resource.
 
-##### Parameters
+#### Parameters
 
 - `message_config` - Hash, input required
 - `message_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'storage_message.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Storage Message Config Defaults and Examples
@@ -622,18 +623,18 @@ bareos_storage_message 'Standard' do
 end
 ```
 
-#### bareos_storage_ndmp
+### bareos_storage_ndmp
 
 Default action is `:create` which generates a storage ndmp resource.
 
-##### Parameters
+#### Parameters
 
 - `ndmp_config` - Hash, input required
 - `ndmp_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'storage_ndmp.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Storage NDMP Config Examples
@@ -646,18 +647,18 @@ bareos_storage_ndmp 'bareos-dir-isilon' do
 end
 ```
 
-#### bareos_storage_storage
+### bareos_storage_storage
 
 Default action is `:create` which generates a storage storage resource.
 
-##### Parameters
+#### Parameters
 
 - `storage_config` - Hash, input required
 - `storage_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'storage_storage.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Storage Storage Config Defaults and Examples
@@ -676,22 +677,22 @@ bareos_storage_storage 'bareos-sd' do
 end
 ```
 
-### Client
+## Client Custom Resources
 
-#### bareos_client_client
+### bareos_client_client
 
 Default action is `:create` which generates a client client resource.
 
 As a matter of getting out a first release cut, we do not currently support pointing to multiple Director Connections via the `FD Addresses` directive but it can be added later if enough need is required. PRs are welcome to add this later.
 
-##### Parameters
+#### Parameters
 
 - `client_config` - Hash, input required
 - `client_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'client_client.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Client Client Defaults and Examples
@@ -702,18 +703,18 @@ bareos_client_client 'myself' do
 end
 ```
 
-#### bareos_client_director
+### bareos_client_director
 
 Default action is `:create` which generates a client director resource.
 
-##### Parameters
+#### Parameters
 
 - `director_config` - Hash, input required
 - `director_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'client_director.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Client Director Defaults and Examples
@@ -725,18 +726,18 @@ bareos_client_director 'bareos-dir' do
 end
 ```
 
-#### bareos_client_message
+### bareos_client_message
 
 Default action is `:create` which generates a client message resource.
 
-##### Parameters
+#### Parameters
 
 - `message_config` - Hash, input required
 - `message_custom_strings` - Array, default `%w()`
 - `template_cookbook` - String, default `'bareos'`
 - `template_name` - String, default `'client_message.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Client Message Defaults and Examples
@@ -748,15 +749,15 @@ bareos_client_message 'Standard' do
 end
 ```
 
-### Console
+#### Console
 
 To help address some inconsistency with the Bareos config layout regarding console configuration(s) (i.e. no `bareos-console.d/` directory or similar), I am having to combine both the `bareos_console_console` and `bareos_console_director` resources into a single resources which configures `bconsole.conf`. If they change/fix their strategy on this in the future, the necessary changes will be made.
 
-#### bareos_console
+### bareos_console
 
 Default action is `:create` which generates a combined console config with either console and/or director resources in `bconsole.conf`.
 
-##### Parameters
+#### Parameters
 
 - `console_config` - Hash, default `{}`
 - `director_config` - Hash, default:
@@ -775,7 +776,7 @@ Default action is `:create` which generates a combined console config with eithe
 
 - `template_name` - String, default `'console_console_director.erb'`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Console Defaults and Examples
@@ -807,11 +808,11 @@ It could fall out of date as we have locked down to a specific commit but we can
 
 **SPECIAL NOTE:** This custom resource does not currently support Ubuntu `>= 16`. The custom resource will post an error in your chef-client log in those cases.
 
-#### graphite_poller (Custom Resource)
+### graphite_poller (Custom Resource)
 
 Default action is `:create` which generates an instance of the Bareos graphite poller.
 
-##### Parameters
+#### Parameters
 
 - `graphite_config` - Hash, input required
 - `src_dest_prefix` - String, default `'/opt'`
@@ -825,7 +826,7 @@ Default action is `:create` which generates an instance of the Bareos graphite p
 - `manage_crontab` - Boolean, default `true`
 - `crontab_mail_to` - String, default `''`
 
-##### Example Usage
+#### Example Usage
 
 ```ruby
 # Bareos Contrib Graphite Poller Plugin Defaults and Examples

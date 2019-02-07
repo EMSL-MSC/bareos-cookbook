@@ -1,0 +1,61 @@
+---
+dist: trusty
+sudo: required
+group: edge
+services: docker
+addons:
+  apt:
+    sources:
+      - chef-stable-trusty
+    packages:
+      - chefdk
+
+stages:
+  - lint
+  - test
+
+install: echo "skip bundle install"
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - chef --version
+  - chef gem update fauxhai
+
+env:
+  - T=server-debian-8
+  - T=server-debian-9
+  - T=server-ubuntu-14
+  - T=server-ubuntu-16
+  - T=server-ubuntu-18
+  - T=server-centos-6
+  - T=server-centos-7
+
+script:
+  - chef gem install kitchen-dokken
+  - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen test $T -d always
+
+jobs:
+  include:
+    - stage: lint
+      env:
+      services:
+      sudo:
+      language: python
+      python: 3.6
+      script:
+        - cookstyle --version
+        - foodcritic --version
+        - rspec --version
+        - delivery --version
+        - pip install pre-commit
+        - pre-commit run -a
+        - chef exec delivery local all
+
+notifications:
+  email:
+    recipients:
+      - karcaw@gmail.com
+      - gitbytes@gmail.com
+    on_failure: never
+    on_success: always
